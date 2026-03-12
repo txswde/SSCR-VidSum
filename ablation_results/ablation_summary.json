@@ -1,0 +1,173 @@
+{
+  "_metadata": {
+    "script": "evaluate_ablation_unified.py",
+    "version": "1.0",
+    "timestamp": "2026-03-05T16:40:29.729577",
+    "skip_alignment": true,
+    "num_samples": 50
+  },
+  "full_data": {
+    "Baseline": {
+      "best_eval": {
+        "R1": 0.527,
+        "R2": 0.4192,
+        "RL": 0.5162,
+        "Cos": 0.6386
+      },
+      "best_train": {
+        "R1": 0.5166,
+        "R2": 0.4137,
+        "RL": 0.5067,
+        "Cos": 0.6556
+      },
+      "DCR": false,
+      "PSAL": false,
+      "causal_final": 0.0,
+      "causal_mean": 0.0,
+      "num_train_epochs": 20,
+      "num_eval_epochs": 20
+    },
+    "DCR Only": {
+      "best_eval": {
+        "R1": 0.5217,
+        "R2": 0.4142,
+        "RL": 0.5108,
+        "Cos": 0.6386
+      },
+      "best_train": {
+        "R1": 0.5059,
+        "R2": 0.4011,
+        "RL": 0.4956,
+        "Cos": 0.6572
+      },
+      "DCR": true,
+      "PSAL": false,
+      "causal_final": 0.1482,
+      "causal_mean": 0.12925477031802118,
+      "num_train_epochs": 17,
+      "num_eval_epochs": 3
+    },
+    "PSAL Only": {
+      "best_eval": {
+        "R1": 0.5245,
+        "R2": 0.4172,
+        "RL": 0.5137,
+        "Cos": 0.6445
+      },
+      "best_train": {
+        "R1": 0.5478,
+        "R2": 0.4473,
+        "RL": 0.5385,
+        "Cos": 0.6776
+      },
+      "DCR": true,
+      "PSAL": true,
+      "causal_final": 0.0,
+      "causal_mean": 0.0,
+      "num_train_epochs": 50,
+      "num_eval_epochs": 50
+    },
+    "Full": {
+      "best_eval": {
+        "R1": 0.5259,
+        "R2": 0.4187,
+        "RL": 0.5152,
+        "Cos": 0.6478
+      },
+      "best_train": {
+        "R1": 0.5185,
+        "R2": 0.416,
+        "RL": 0.5087,
+        "Cos": 0.6816
+      },
+      "DCR": true,
+      "PSAL": true,
+      "causal_final": 0.038,
+      "causal_mean": 0.03887515151515151,
+      "num_train_epochs": 25,
+      "num_eval_epochs": 25
+    }
+  },
+  "data_20pct": {
+    "Baseline": {
+      "best_eval": {
+        "R1": 0.5072,
+        "R2": 0.3972,
+        "RL": 0.4961,
+        "Cos": 0.6192
+      },
+      "best_train": {
+        "R1": 0.5181,
+        "R2": 0.4139,
+        "RL": 0.5082,
+        "Cos": 0.6227
+      },
+      "DCR": false,
+      "PSAL": false,
+      "causal_final": 0.0,
+      "causal_mean": 0.0,
+      "num_train_epochs": 20,
+      "num_eval_epochs": 4
+    },
+    "DCR Only": {
+      "best_eval": {
+        "R1": 0.5104,
+        "R2": 0.4004,
+        "RL": 0.4992,
+        "Cos": 0.6374
+      },
+      "best_train": {
+        "R1": 0.5086,
+        "R2": 0.4038,
+        "RL": 0.4992,
+        "Cos": 0.653
+      },
+      "DCR": true,
+      "PSAL": false,
+      "causal_final": 0.1498,
+      "causal_mean": 0.1495133333333333,
+      "num_train_epochs": 20,
+      "num_eval_epochs": 10
+    },
+    "PSAL Only": {
+      "best_eval": {
+        "R1": 0.5148,
+        "R2": 0.4057,
+        "RL": 0.5034,
+        "Cos": 0.6232
+      },
+      "best_train": {
+        "R1": 0.5096,
+        "R2": 0.4043,
+        "RL": 0.4996,
+        "Cos": 0.6245
+      },
+      "DCR": false,
+      "PSAL": true,
+      "causal_final": 0.0,
+      "causal_mean": 0.0,
+      "num_train_epochs": 15,
+      "num_eval_epochs": 3
+    },
+    "Full": {
+      "best_eval": {
+        "R1": 0.5166,
+        "R2": 0.4066,
+        "RL": 0.5056,
+        "Cos": 0.6261
+      },
+      "best_train": {
+        "R1": 0.5036,
+        "R2": 0.3966,
+        "RL": 0.493,
+        "Cos": 0.6494
+      },
+      "DCR": true,
+      "PSAL": true,
+      "causal_final": 0.1487,
+      "causal_mean": 0.14926888888888887,
+      "num_train_epochs": 15,
+      "num_eval_epochs": 3
+    }
+  }
+}

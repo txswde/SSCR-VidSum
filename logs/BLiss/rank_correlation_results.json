@@ -1,0 +1,66 @@
+{
+  "BLiSS_supervised_baseline": {
+    "video": {
+      "spearman_rho_mean": 0.12472224146309521,
+      "spearman_rho_std": 0.10591231935750334,
+      "kendall_tau_mean": 0.10200487664892456,
+      "kendall_tau_std": 0.08662106455050476,
+      "n_samples": 2542
+    },
+    "text": {
+      "spearman_rho_mean": 0.3219021540149998,
+      "spearman_rho_std": 0.14836524236564222,
+      "kendall_tau_mean": 0.26683036880147015,
+      "kendall_tau_std": 0.128277436065716,
+      "n_samples": 2531
+    }
+  },
+  "BLiSS_unsupervised": {
+    "video": {
+      "spearman_rho_mean": 0.07835622840888008,
+      "spearman_rho_std": 0.10386423794280789,
+      "kendall_tau_mean": 0.0640841359899445,
+      "kendall_tau_std": 0.0849460212945764,
+      "n_samples": 2542
+    },
+    "text": {
+      "spearman_rho_mean": 0.2927542026221614,
+      "spearman_rho_std": 0.15228159868013963,
+      "kendall_tau_mean": 0.24284266516010802,
+      "kendall_tau_std": 0.13148285341081345,
+      "n_samples": 2531
+    }
+  },
+  "BLiSS_unsupervised_yinguo": {
+    "video": {
+      "spearman_rho_mean": 0.07574272460372129,
+      "spearman_rho_std": 0.10522944311908577,
+      "kendall_tau_mean": 0.06194666762414246,
+      "kendall_tau_std": 0.08606256626586141,
+      "n_samples": 2542
+    },
+    "text": {
+      "spearman_rho_mean": 0.3254405928074801,
+      "spearman_rho_std": 0.1465814990769138,
+      "kendall_tau_mean": 0.27011042094758314,
+      "kendall_tau_std": 0.12682440663718922,
+      "n_samples": 2531
+    }
+  },
+  "BLiSS_unsupervised_yinguo_duiqi_corrected": {
+    "video": {
+      "spearman_rho_mean": 0.07907201274386402,
+      "spearman_rho_std": 0.10266083916979069,
+      "kendall_tau_mean": 0.06466954640085996,
+      "kendall_tau_std": 0.08396181598271454,
+      "n_samples": 2542
+    },
+    "text": {
+      "spearman_rho_mean": 0.3198655571433349,
+      "spearman_rho_std": 0.14766176029814915,
+      "kendall_tau_mean": 0.26553617366558524,
+      "kendall_tau_std": 0.12774010099766697,
+      "n_samples": 2531
+    }
+  }
+}

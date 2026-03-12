@@ -1,0 +1,90 @@
+{
+  "Baseline": {
+    "uniform": {
+      "macro_spearman": 0.26672285143654384,
+      "macro_kendall": 0.18478964657811933,
+      "weighted_spearman": 0.3047848360044506,
+      "weighted_kendall": 0.21083029027358874,
+      "n_valid": 50,
+      "n_total": 50,
+      "n_skipped_const": 0,
+      "n_skipped_mismatch": 0
+    },
+    "allones": {
+      "macro_spearman": 0.30237781696144356,
+      "macro_kendall": 0.20997685242623212,
+      "weighted_spearman": 0.35147307683573964,
+      "weighted_kendall": 0.24385363064081667,
+      "n_valid": 50,
+      "n_total": 50,
+      "n_skipped_const": 0,
+      "n_skipped_mismatch": 0
+    }
+  },
+  "DCR Only": {
+    "uniform": {
+      "macro_spearman": 0.20570436645905396,
+      "macro_kendall": 0.1408374472983062,
+      "weighted_spearman": 0.23233461350691942,
+      "weighted_kendall": 0.15838426668563335,
+      "n_valid": 50,
+      "n_total": 50,
+      "n_skipped_const": 0,
+      "n_skipped_mismatch": 0
+    },
+    "allones": {
+      "macro_spearman": 0.21680073904289923,
+      "macro_kendall": 0.1490975595873735,
+      "weighted_spearman": 0.21925803504137456,
+      "weighted_kendall": 0.15020155844316288,
+      "n_valid": 50,
+      "n_total": 50,
+      "n_skipped_const": 0,
+      "n_skipped_mismatch": 0
+    }
+  },
+  "PSAL Only": {
+    "uniform": {
+      "macro_spearman": 0.30058975614377714,
+      "macro_kendall": 0.20883302647003266,
+      "weighted_spearman": 0.3462568461958318,
+      "weighted_kendall": 0.23973867451309108,
+      "n_valid": 50,
+      "n_total": 50,
+      "n_skipped_const": 0,
+      "n_skipped_mismatch": 0
+    },
+    "allones": {
+      "macro_spearman": 0.31634504634350025,
+      "macro_kendall": 0.22109371376437623,
+      "weighted_spearman": 0.36513235233490876,
+      "weighted_kendall": 0.25420905965086793,
+      "n_valid": 50,
+      "n_total": 50,
+      "n_skipped_const": 0,
+      "n_skipped_mismatch": 0
+    }
+  },
+  "Full": {
+    "uniform": {
+      "macro_spearman": 0.23047048722926056,
+      "macro_kendall": 0.1574967568752826,
+      "weighted_spearman": 0.25497367446792274,
+      "weighted_kendall": 0.17487115249522456,
+      "n_valid": 50,
+      "n_total": 50,
+      "n_skipped_const": 0,
+      "n_skipped_mismatch": 0
+    },
+    "allones": {
+      "macro_spearman": 0.2588291352907561,
+      "macro_kendall": 0.1785897301047136,
+      "weighted_spearman": 0.2876013941981261,
+      "weighted_kendall": 0.1987105824996275,
+      "n_valid": 50,
+      "n_total": 50,
+      "n_skipped_const": 0,
+      "n_skipped_mismatch": 0
+    }
+  }
+}

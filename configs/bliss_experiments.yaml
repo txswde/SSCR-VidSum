@@ -1,0 +1,126 @@
+# BLiSS 数据集实验配置
+# 使用方法: 
+#   参考此文件中的参数配置运行训练
+#   例如: python train.py --dataset BLiSS --suffix unsupervised_duiqi \
+#         --disable_alignment_mask --lambda_causal_contrast 0.3 \
+#         --enable_causal_alignment --lambda_causal_alignment 0.5
+
+# ============================================================
+# 模型配置说明
+# ============================================================
+
+experiments:
+  # ------------------------------------------------------------
+  # 1. 有监督基线 (Upper Bound)
+  # 使用 GT 时间对齐掩码监督跨模态注意力
+  # ------------------------------------------------------------
+  supervised_baseline:
+    description: "有监督基线，使用GT时间对齐掩码引导注意力"
+    key_features:
+      - "使用 BLiSS 数据集提供的真实时间对齐信息"
+      - "Video-Text 注意力受对齐掩码约束"
+    command: >
+      python train.py --dataset BLiSS --max_epoch 25 --batch_size 64
+      --suffix supervised_baseline
+      --lambda_causal_contrast 0.3
+    params:
+      disable_alignment_mask: false    # 使用GT对齐掩码
+      lambda_causal_contrast: 0.3      # 因果对比损失权重
+      enable_causal_alignment: false   # 不需要无监督对齐发现
+    expected_results:
+      text_spearman_rho: 0.32
+      gt_correlation: 0.45
+      rouge1: 0.526
+      
+  # ------------------------------------------------------------
+  # 2. 无监督 + 因果对比损失 (创新1)
+  # 移除GT对齐掩码，仅通过因果对比损失学习
+  # ------------------------------------------------------------
+  unsupervised:
+    description: "无监督模式+因果对比损失，不使用GT对齐"
+    key_features:
+      - "禁用 GT 时间对齐掩码 (disable_alignment_mask=True)"
+      - "启用因果对比损失，通过轻微/剧烈干预学习区分核心内容"
+    command: >
+      python train.py --dataset BLiSS --max_epoch 25 --batch_size 64
+      --suffix unsupervised
+      --disable_alignment_mask
+      --lambda_causal_contrast 0.3
+    params:
+      disable_alignment_mask: true     # 禁用GT对齐掩码
+      lambda_causal_contrast: 0.3      # 因果对比损失权重
+      enable_causal_alignment: false   # 不启用对齐发现
+    expected_results:
+      text_spearman_rho: 0.29
+      rouge1: 0.524
+      
+  # ------------------------------------------------------------
+  # 3. 无监督 + 因果对比 + 对齐发现 (创新1+2，完整版)
+  # 核心创新：Intervention Dissimilarity
+  # ------------------------------------------------------------
+  unsupervised_duiqi:
+    description: "完整版：无监督+因果对比+干预相异度对齐发现"
+    key_features:
+      - "禁用 GT 时间对齐掩码"
+      - "因果对比损失"
+      - "★ 干预相异度 (Intervention Dissimilarity) 用于无监督对齐发现"
+    command: >
+      python train.py --dataset BLiSS --max_epoch 25 --batch_size 64
+      --suffix unsupervised_duiqi
+      --disable_alignment_mask
+      --lambda_causal_contrast 0.3
+      --enable_causal_alignment
+      --lambda_causal_alignment 0.5
+    params:
+      disable_alignment_mask: true       # 禁用GT对齐掩码
+      lambda_causal_contrast: 0.3        # 因果对比损失权重
+      enable_causal_alignment: true      # ★ 启用对齐发现
+      lambda_causal_alignment: 0.5       # 对齐发现损失权重
+      lambda_causal_diagonal: 1.0        # 对角线正则化
+      lambda_causal_sparsity: 0.1        # 稀疏性正则化
+      alignment_warmup_epochs: 5         # 预热期（不计算对齐损失）
+      alignment_compute_freq: 10         # 计算频率
+    expected_results:
+      text_spearman_rho: 0.32
+      gt_correlation: 0.74              # ★ 显著提升
+      rouge1: 0.526
+      
+# ============================================================
+# 创新点总结
+# ============================================================
+innovation_summary:
+  contribution_1:
+    name: "Causal Contrastive Loss (因果对比损失)"
+    file: "causal_contrastive_loss.py"
+    description: |
+      通过轻微/剧烈干预，让模型学会区分"相关"与"因果"：
+      - 轻微干预 → 特征应保持不变
+      - 剧烈干预 → 特征应产生变化
+    enabled_by: "lambda_causal_contrast > 0"
+    
+  contribution_2:
+    name: "Intervention Dissimilarity (干预相异度)"
+    file: "causal_alignment_discovery.py"
+    description: |
+      无监督对齐发现的核心创新：
+      - 对每个文本句子进行干预（zero-out）
+      - 观察每个视频帧预测的变化
+      - 构建对齐矩阵，正则化为对角线模式
+      
+      数学形式: Alignment_{i,j} = |P(Y_i|V, T) - P(Y_i|V, T_-j)|
+    enabled_by: "enable_causal_alignment=True"
+
+# ============================================================
+# 共享超参数
+# ============================================================
+shared_params:
+  dataset: BLiSS
+  max_epoch: 25
+  batch_size: 64
+  lr: 0.001
+  weight_decay: 1e-7
+  num_hidden: 128
+  num_layers: 6
+  lambda_contrastive_inter: 0.01
+  lambda_contrastive_intra: 0.001
+  seed: 12345

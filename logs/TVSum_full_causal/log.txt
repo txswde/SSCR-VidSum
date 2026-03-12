@@ -1,0 +1,1041 @@
+[2026-02-03 08:44:59,297] {'dataset': 'TVSum', 'data_root': 'data', 'device': 'cuda', 'seed': 666, 'max_epoch': 30, 'start_epoch': 0, 'batch_size': 4, 'num_workers': 0, 'model_dir': 'logs/TVSum_full_causal', 'log_file': 'log.txt', 'lr': 0.001, 'weight_decay': 1e-05, 'nms_thresh': 0.4, 'print_freq': 5, 'eval_freq': 1, 'suffix': 'full_causal', 'checkpoint': None, 'test': False, 'num_input_video': 1024, 'num_input_text': 768, 'num_feature': 512, 'num_hidden': 128, 'dropout_video': 0.1, 'dropout_text': 0.1, 'dropout_attn': 0.5, 'dropout_fc': 0.5, 'num_layers': 2, 'lambda_contrastive_inter': 0.1, 'lambda_contrastive_intra': 1.0, 'ratio': 16, 'lambda_causal_contrast': 0.3, 'lambda_causal_effect': 0.3, 'lambda_alignment': 1.0, 'lambda_text_necessity': 1.0, 'cf_strategy': 'mixed', 'disable_alignment_mask': False, 'enable_causal_alignment': True, 'lambda_causal_alignment': 0.5, 'lambda_causal_diagonal': 1.0, 'lambda_causal_sparsity': 0.1, 'alignment_warmup_epochs': 3, 'alignment_compute_freq': 5, 'lambda_cf_contrast': 0.5, 'lambda_cf_effect': 0.3, 'lambda_cf_sensitivity': 0.2, 'enable_cf_explanation': False}
+[2026-02-03 08:44:59,325] Start training on data/TVSum/splits.yml: split 0
+[2026-02-03 08:44:59,549] Causal Alignment Discovery enabled for TVSum (Intervention Dissimilarity)
+[2026-02-03 08:44:59,568] 
+Model_VideoSumm(
+  (proj_fc_video): Sequential(
+    (0): Linear(in_features=1024, out_features=128, bias=True)
+    (1): Dropout(p=0.1, inplace=False)
+  )
+  (proj_fc_text): Sequential(
+    (0): Linear(in_features=768, out_features=128, bias=True)
+    (1): Dropout(p=0.1, inplace=False)
+  )
+  (multiway_list): ModuleList(
+    (0-1): 2 x MultiWayTransformer(
+      (norm1_fused): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (attn_fusion): MultiHeadAttention(q_dims=128, k_dims=128, v_dims=128, h_dims=128, o_dims=128, heads=8, p=0.5, bias=True)
+      (norm2_video): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (ffn_video): FFN(
+        (fc1): Linear(in_features=128, out_features=512, bias=True)
+        (act): GELU(approximate='none')
+        (drop1): Dropout(p=0.5, inplace=False)
+        (fc2): Linear(in_features=512, out_features=128, bias=True)
+        (drop2): Dropout(p=0.5, inplace=False)
+      )
+      (norm2_text): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (ffn_text): FFN(
+        (fc1): Linear(in_features=128, out_features=512, bias=True)
+        (act): GELU(approximate='none')
+        (drop1): Dropout(p=0.5, inplace=False)
+        (fc2): Linear(in_features=512, out_features=128, bias=True)
+        (drop2): Dropout(p=0.5, inplace=False)
+      )
+    )
+  )
+  (norm_video): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+  (norm_text): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+  (fc_video): Sequential(
+    (0): Linear(in_features=128, out_features=128, bias=True)
+    (1): ReLU(inplace=True)
+    (2): Dropout(p=0.5, inplace=False)
+    (3): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+  )
+  (fc_video_cls): Linear(in_features=128, out_features=1, bias=True)
+  (fc_video_loc): Linear(in_features=128, out_features=2, bias=True)
+  (fc_video_ctr): Linear(in_features=128, out_features=1, bias=True)
+  (fc_text): Sequential(
+    (0): Linear(in_features=128, out_features=128, bias=True)
+    (1): ReLU(inplace=True)
+    (2): Dropout(p=0.5, inplace=False)
+    (3): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+  )
+  (fc_text_cls): Linear(in_features=128, out_features=1, bias=True)
+  (fc_text_loc): Linear(in_features=128, out_features=2, bias=True)
+  (fc_text_ctr): Linear(in_features=128, out_features=1, bias=True)
+  (causal_feature_head): Linear(in_features=128, out_features=64, bias=True)
+  (spurious_feature_head): Linear(in_features=128, out_features=64, bias=True)
+)
+[2026-02-03 08:45:02,537] [Train] Epoch: 1/30 Iter: 5/10 Time: 0.593 Data: 0.061 Loss: 0.1661/5.7230/1.2648/0.1666/1.7764/0.3717 Align:0.0000
+[2026-02-03 08:45:04,006] [Train] Epoch: 1/30 Iter: 10/10 Time: 0.444 Data: 0.051 Loss: 0.1576/5.7581/1.2021/0.1598/1.5324/0.3568 Align:0.0000
+[2026-02-03 08:45:05,579] [Eval]  Epoch: 1/30 F-score: 0.5928/0.5928
+
+
+[2026-02-03 08:45:07,234] [Train] Epoch: 2/30 Iter: 5/10 Time: 0.406 Data: 0.041 Loss: 0.1461/5.2042/1.1264/0.1665/1.1982/0.3343 Align:0.0000
+[2026-02-03 08:45:08,671] [Train] Epoch: 2/30 Iter: 10/10 Time: 0.376 Data: 0.036 Loss: 0.1479/5.3483/1.1120/0.1673/1.1475/0.3370 Align:0.0000
+[2026-02-03 08:45:10,013] [Eval]  Epoch: 2/30 F-score: 0.5713/0.5928
+
+
+[2026-02-03 08:45:13,186] [Train] Epoch: 3/30 Iter: 5/10 Time: 0.428 Data: 0.034 Loss: 0.1458/5.6736/1.1066/0.1464/1.0969/0.3199 Align:0.1236
+[2026-02-03 08:45:16,995] [Train] Epoch: 3/30 Iter: 10/10 Time: 0.484 Data: 0.032 Loss: 0.1464/5.1873/1.1020/0.1532/1.0403/0.3257 Align:0.1112
+[2026-02-03 08:45:18,742] [Eval]  Epoch: 3/30 F-score: 0.5653/0.5928
+
+
+[2026-02-03 08:45:35,439] [Train] Epoch: 4/30 Iter: 5/10 Time: 0.891 Data: 0.032 Loss: 0.1437/5.2732/1.0795/0.1516/0.9479/0.3354 Align:0.1272
+[2026-02-03 08:45:38,832] [Train] Epoch: 4/30 Iter: 10/10 Time: 0.865 Data: 0.032 Loss: 0.1430/5.1425/1.1071/0.1470/1.0116/0.3172 Align:0.1269
+[2026-02-03 08:45:40,533] [Eval]  Epoch: 4/30 F-score: 0.5639/0.5928
+
+
+[2026-02-03 08:45:44,579] [Train] Epoch: 5/30 Iter: 5/10 Time: 0.859 Data: 0.031 Loss: 0.1455/5.5184/1.0815/0.1399/1.0533/0.3068 Align:0.1340
+[2026-02-03 08:45:47,706] [Train] Epoch: 5/30 Iter: 10/10 Time: 0.835 Data: 0.030 Loss: 0.1430/5.1420/1.1082/0.1421/1.0699/0.3216 Align:0.1148
+[2026-02-03 08:45:49,147] [Eval]  Epoch: 5/30 F-score: 0.5486/0.5928
+
+
+[2026-02-03 08:45:58,911] [Train] Epoch: 6/30 Iter: 5/10 Time: 0.937 Data: 0.031 Loss: 0.1415/4.8519/1.0718/0.1514/1.1242/0.3221 Align:0.1060
+[2026-02-03 08:46:01,049] [Train] Epoch: 6/30 Iter: 10/10 Time: 0.894 Data: 0.030 Loss: 0.1424/5.1463/1.0948/0.1485/1.0451/0.2709 Align:0.1198
+[2026-02-03 08:46:02,376] [Eval]  Epoch: 6/30 F-score: 0.5482/0.5928
+
+
+[2026-02-03 08:46:04,861] [Train] Epoch: 7/30 Iter: 5/10 Time: 0.864 Data: 0.029 Loss: 0.1487/4.6539/1.1015/0.1453/0.8576/0.3161 Align:0.1117
+[2026-02-03 08:46:59,414] [Train] Epoch: 7/30 Iter: 10/10 Time: 1.581 Data: 0.029 Loss: 0.1487/5.1930/1.0981/0.1559/0.7908/0.2986 Align:0.1023
+[2026-02-03 08:47:00,855] [Eval]  Epoch: 7/30 F-score: 0.5972/0.5972
+
+
+[2026-02-03 08:47:03,469] [Train] Epoch: 8/30 Iter: 5/10 Time: 1.511 Data: 0.028 Loss: 0.1477/5.1555/1.1106/0.1488/0.6055/0.2910 Align:0.1139
+[2026-02-03 08:47:06,582] [Train] Epoch: 8/30 Iter: 10/10 Time: 1.455 Data: 0.028 Loss: 0.1462/5.2092/1.0937/0.1539/0.6413/0.2941 Align:0.1224
+[2026-02-03 08:47:07,962] [Eval]  Epoch: 8/30 F-score: 0.6022/0.6022
+
+
+[2026-02-03 08:47:11,047] [Train] Epoch: 9/30 Iter: 5/10 Time: 1.406 Data: 0.028 Loss: 0.1406/5.7035/1.0956/0.1714/1.0402/0.2862 Align:0.1485
+[2026-02-03 08:47:14,086] [Train] Epoch: 9/30 Iter: 10/10 Time: 1.362 Data: 0.028 Loss: 0.1413/5.1254/1.0998/0.1633/1.0325/0.2936 Align:0.1247
+[2026-02-03 08:47:15,502] [Eval]  Epoch: 9/30 F-score: 0.6157/0.6157
+
+
+[2026-02-03 08:47:24,548] [Train] Epoch: 10/30 Iter: 5/10 Time: 1.385 Data: 0.028 Loss: 0.1412/5.1761/1.0861/0.1272/1.0701/0.2750 Align:0.1219
+[2026-02-03 08:47:27,659] [Train] Epoch: 10/30 Iter: 10/10 Time: 1.347 Data: 0.027 Loss: 0.1395/5.1735/1.0972/0.1356/1.1124/0.2841 Align:0.1098
+[2026-02-03 08:47:29,035] [Eval]  Epoch: 10/30 F-score: 0.6121/0.6157
+
+
+[2026-02-03 08:47:32,751] [Train] Epoch: 11/30 Iter: 5/10 Time: 1.318 Data: 0.027 Loss: 0.1395/4.8669/1.1003/0.1381/1.1354/0.2549 Align:0.1214
+[2026-02-03 08:47:36,008] [Train] Epoch: 11/30 Iter: 10/10 Time: 1.288 Data: 0.027 Loss: 0.1395/5.1312/1.0931/0.1480/1.1302/0.2715 Align:0.1251
+[2026-02-03 08:47:37,382] [Eval]  Epoch: 11/30 F-score: 0.5902/0.6157
+
+
+[2026-02-03 08:47:41,359] [Train] Epoch: 12/30 Iter: 5/10 Time: 1.267 Data: 0.027 Loss: 0.1407/4.8454/1.0955/0.1677/1.1838/0.2597 Align:0.1384
+[2026-02-03 08:47:44,880] [Train] Epoch: 12/30 Iter: 10/10 Time: 1.243 Data: 0.027 Loss: 0.1389/5.1723/1.0977/0.1684/1.1620/0.2746 Align:0.1054
+[2026-02-03 08:47:46,267] [Eval]  Epoch: 12/30 F-score: 0.6068/0.6157
+
+
+[2026-02-03 08:47:55,762] [Train] Epoch: 13/30 Iter: 5/10 Time: 1.269 Data: 0.027 Loss: 0.1378/5.7196/1.0648/0.1602/1.1715/0.2594 Align:0.1210
+[2026-02-03 08:48:51,720] [Train] Epoch: 13/30 Iter: 10/10 Time: 1.651 Data: 0.027 Loss: 0.1393/5.1687/1.0991/0.1552/1.1770/0.2574 Align:0.1133
+[2026-02-03 08:48:53,154] [Eval]  Epoch: 13/30 F-score: 0.6188/0.6188
+
+
+[2026-02-03 08:48:56,397] [Train] Epoch: 14/30 Iter: 5/10 Time: 1.614 Data: 0.027 Loss: 0.1378/5.2234/1.1039/0.1579/1.1124/0.2534 Align:0.1190
+[2026-02-03 08:48:58,719] [Train] Epoch: 14/30 Iter: 10/10 Time: 1.573 Data: 0.027 Loss: 0.1409/5.1505/1.1017/0.1487/1.0101/0.2477 Align:0.0977
+[2026-02-03 08:49:00,108] [Eval]  Epoch: 14/30 F-score: 0.6049/0.6188
+
+
+[2026-02-03 08:49:04,105] [Train] Epoch: 15/30 Iter: 5/10 Time: 1.546 Data: 0.027 Loss: 0.1444/5.5545/1.1045/0.1635/0.8406/0.2460 Align:0.1182
+[2026-02-03 08:49:13,519] [Train] Epoch: 15/30 Iter: 10/10 Time: 1.557 Data: 0.027 Loss: 0.1440/5.1828/1.1015/0.1548/0.8023/0.2414 Align:0.1316
+[2026-02-03 08:49:14,959] [Eval]  Epoch: 15/30 F-score: 0.5821/0.6188
+
+
+[2026-02-03 08:49:16,709] [Train] Epoch: 16/30 Iter: 5/10 Time: 1.518 Data: 0.027 Loss: 0.1464/5.3451/1.0789/0.1413/0.5742/0.2494 Align:0.1077
+[2026-02-03 08:49:19,508] [Train] Epoch: 16/30 Iter: 10/10 Time: 1.488 Data: 0.027 Loss: 0.1438/5.1708/1.0935/0.1475/0.6952/0.2396 Align:0.1088
+[2026-02-03 08:49:20,977] [Eval]  Epoch: 16/30 F-score: 0.5974/0.6188
+
+
+[2026-02-03 08:49:32,866] [Train] Epoch: 17/30 Iter: 5/10 Time: 1.515 Data: 0.027 Loss: 0.1415/5.3216/1.0804/0.1450/0.7818/0.2437 Align:0.1292
+[2026-02-03 08:49:42,073] [Train] Epoch: 17/30 Iter: 10/10 Time: 1.525 Data: 0.027 Loss: 0.1400/5.1580/1.0931/0.1499/0.9087/0.2373 Align:0.1024
+[2026-02-03 08:49:43,493] [Eval]  Epoch: 17/30 F-score: 0.5905/0.6188
+
+
+[2026-02-03 08:49:46,339] [Train] Epoch: 18/30 Iter: 5/10 Time: 1.498 Data: 0.027 Loss: 0.1366/5.1811/1.0845/0.1464/1.0760/0.2471 Align:0.1149
+[2026-02-03 08:49:49,767] [Train] Epoch: 18/30 Iter: 10/10 Time: 1.475 Data: 0.027 Loss: 0.1355/5.1188/1.0940/0.1542/1.1059/0.2380 Align:0.1334
+[2026-02-03 08:49:51,214] [Eval]  Epoch: 18/30 F-score: 0.5793/0.6188
+
+
+[2026-02-03 08:50:01,457] [Train] Epoch: 19/30 Iter: 5/10 Time: 1.491 Data: 0.027 Loss: 0.1339/5.2370/1.1201/0.1417/1.0959/0.2315 Align:0.1352
+[2026-02-03 08:50:04,598] [Train] Epoch: 19/30 Iter: 10/10 Time: 1.468 Data: 0.027 Loss: 0.1362/5.1165/1.0834/0.1497/1.0076/0.2394 Align:0.1190
+[2026-02-03 08:50:06,048] [Eval]  Epoch: 19/30 F-score: 0.6023/0.6188
+
+
+[2026-02-03 08:50:08,641] [Train] Epoch: 20/30 Iter: 5/10 Time: 1.444 Data: 0.027 Loss: 0.1382/4.9064/1.0762/0.1513/0.9747/0.2692 Align:0.1270
+[2026-02-03 08:50:12,041] [Train] Epoch: 20/30 Iter: 10/10 Time: 1.424 Data: 0.027 Loss: 0.1369/5.1227/1.0883/0.1475/1.0005/0.2347 Align:0.1066
+[2026-02-03 08:50:13,364] [Eval]  Epoch: 20/30 F-score: 0.5372/0.6188
+
+
+[2026-02-03 08:50:15,650] [Train] Epoch: 21/30 Iter: 5/10 Time: 1.401 Data: 0.027 Loss: 0.1364/4.9817/1.0884/0.1422/0.8767/0.2296 Align:0.1256
+[2026-02-03 08:50:19,319] [Train] Epoch: 21/30 Iter: 10/10 Time: 1.385 Data: 0.027 Loss: 0.1357/5.1330/1.0899/0.1468/0.9068/0.2446 Align:0.1150
+[2026-02-03 08:50:20,675] [Eval]  Epoch: 21/30 F-score: 0.5943/0.6188
+
+
+[2026-02-03 08:50:36,822] [Train] Epoch: 22/30 Iter: 5/10 Time: 1.428 Data: 0.027 Loss: 0.1346/5.1935/1.0889/0.1436/0.9925/0.2296 Align:0.1031
+[2026-02-03 08:50:39,323] [Train] Epoch: 22/30 Iter: 10/10 Time: 1.407 Data: 0.027 Loss: 0.1349/5.1133/1.0802/0.1387/0.9522/0.2224 Align:0.1205
+[2026-02-03 08:50:40,691] [Eval]  Epoch: 22/30 F-score: 0.5466/0.6188
+
+
+[2026-02-03 08:50:43,759] [Train] Epoch: 23/30 Iter: 5/10 Time: 1.389 Data: 0.027 Loss: 0.1362/5.4130/1.0601/0.1483/0.7640/0.2344 Align:0.1198
+[2026-02-03 08:51:37,577] [Train] Epoch: 23/30 Iter: 10/10 Time: 1.593 Data: 0.027 Loss: 0.1356/5.1182/1.0719/0.1459/0.8086/0.2170 Align:0.1467
+[2026-02-03 08:51:38,899] [Eval]  Epoch: 23/30 F-score: 0.5167/0.6188
+
+
+[2026-02-03 08:51:41,951] [Train] Epoch: 24/30 Iter: 5/10 Time: 1.572 Data: 0.027 Loss: 0.1336/5.2167/1.0810/0.1550/0.8638/0.2202 Align:0.1290
+[2026-02-03 08:51:51,144] [Train] Epoch: 24/30 Iter: 10/10 Time: 1.578 Data: 0.027 Loss: 0.1344/5.1108/1.0779/0.1531/0.8890/0.2118 Align:0.1086
+[2026-02-03 08:51:52,463] [Eval]  Epoch: 24/30 F-score: 0.5484/0.6188
+
+
+[2026-02-03 08:52:01,331] [Train] Epoch: 25/30 Iter: 5/10 Time: 1.582 Data: 0.026 Loss: 0.1357/4.7130/1.0865/0.1559/0.8697/0.2140 Align:0.1069
+[2026-02-03 08:52:05,463] [Train] Epoch: 25/30 Iter: 10/10 Time: 1.566 Data: 0.026 Loss: 0.1351/5.1008/1.0681/0.1504/0.8669/0.2062 Align:0.1193
+[2026-02-03 08:52:06,967] [Eval]  Epoch: 25/30 F-score: 0.4923/0.6188
+
+
+[2026-02-03 08:52:10,037] [Train] Epoch: 26/30 Iter: 5/10 Time: 1.548 Data: 0.026 Loss: 0.1349/4.8812/1.0604/0.1436/0.7506/0.2167 Align:0.1564
+[2026-02-03 08:53:04,283] [Train] Epoch: 26/30 Iter: 10/10 Time: 1.727 Data: 0.026 Loss: 0.1354/5.0979/1.0553/0.1405/0.7954/0.1995 Align:0.1343
+[2026-02-03 08:53:05,709] [Eval]  Epoch: 26/30 F-score: 0.5105/0.6188
+
+
+[2026-02-03 08:54:02,941] [Train] Epoch: 27/30 Iter: 5/10 Time: 1.910 Data: 0.026 Loss: 0.1348/5.2530/1.0532/0.1472/0.8637/0.2044 Align:0.1373
+[2026-02-03 08:54:05,718] [Train] Epoch: 27/30 Iter: 10/10 Time: 1.885 Data: 0.026 Loss: 0.1371/5.0966/1.0518/0.1476/0.8181/0.1990 Align:0.1312
+[2026-02-03 08:54:07,135] [Eval]  Epoch: 27/30 F-score: 0.5327/0.6188
+
+
+[2026-02-03 08:54:21,115] [Train] Epoch: 28/30 Iter: 5/10 Time: 1.902 Data: 0.027 Loss: 0.1387/5.5603/1.0161/0.1501/0.9895/0.2079 Align:0.0915
+[2026-02-03 08:54:23,769] [Train] Epoch: 28/30 Iter: 10/10 Time: 1.877 Data: 0.027 Loss: 0.1399/5.1058/1.0339/0.1508/0.9349/0.2229 Align:0.1111
+[2026-02-03 08:54:25,175] [Eval]  Epoch: 28/30 F-score: 0.5879/0.6188
+
+
+[2026-02-03 08:54:33,441] [Train] Epoch: 29/30 Iter: 5/10 Time: 1.873 Data: 0.026 Loss: 0.1440/5.7358/1.0134/0.1545/0.5575/0.1968 Align:0.1033
+[2026-02-03 08:55:25,840] [Train] Epoch: 29/30 Iter: 10/10 Time: 2.022 Data: 0.026 Loss: 0.1438/5.0999/1.0433/0.1535/0.5827/0.1961 Align:0.1009
+[2026-02-03 08:55:27,151] [Eval]  Epoch: 29/30 F-score: 0.5988/0.6188
+
+
+[2026-02-03 08:55:30,385] [Train] Epoch: 30/30 Iter: 5/10 Time: 1.998 Data: 0.026 Loss: 0.1457/4.9823/1.0379/0.1422/0.5025/0.1986 Align:0.1147
+[2026-02-03 08:55:34,547] [Train] Epoch: 30/30 Iter: 10/10 Time: 1.979 Data: 0.026 Loss: 0.1455/5.1243/1.0474/0.1526/0.8038/0.1815 Align:0.1065
+[2026-02-03 08:55:35,862] [Eval]  Epoch: 30/30 F-score: 0.5812/0.6188
+
+
+[2026-02-03 08:55:35,876] Start training on data/TVSum/splits.yml: split 1
+[2026-02-03 08:55:35,908] Causal Alignment Discovery enabled for TVSum (Intervention Dissimilarity)
+[2026-02-03 08:55:35,918] 
+Model_VideoSumm(
+  (proj_fc_video): Sequential(
+    (0): Linear(in_features=1024, out_features=128, bias=True)
+    (1): Dropout(p=0.1, inplace=False)
+  )
+  (proj_fc_text): Sequential(
+    (0): Linear(in_features=768, out_features=128, bias=True)
+    (1): Dropout(p=0.1, inplace=False)
+  )
+  (multiway_list): ModuleList(
+    (0-1): 2 x MultiWayTransformer(
+      (norm1_fused): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (attn_fusion): MultiHeadAttention(q_dims=128, k_dims=128, v_dims=128, h_dims=128, o_dims=128, heads=8, p=0.5, bias=True)
+      (norm2_video): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (ffn_video): FFN(
+        (fc1): Linear(in_features=128, out_features=512, bias=True)
+        (act): GELU(approximate='none')
+        (drop1): Dropout(p=0.5, inplace=False)
+        (fc2): Linear(in_features=512, out_features=128, bias=True)
+        (drop2): Dropout(p=0.5, inplace=False)
+      )
+      (norm2_text): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (ffn_text): FFN(
+        (fc1): Linear(in_features=128, out_features=512, bias=True)
+        (act): GELU(approximate='none')
+        (drop1): Dropout(p=0.5, inplace=False)
+        (fc2): Linear(in_features=512, out_features=128, bias=True)
+        (drop2): Dropout(p=0.5, inplace=False)
+      )
+    )
+  )
+  (norm_video): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+  (norm_text): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+  (fc_video): Sequential(
+    (0): Linear(in_features=128, out_features=128, bias=True)
+    (1): ReLU(inplace=True)
+    (2): Dropout(p=0.5, inplace=False)
+    (3): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+  )
+  (fc_video_cls): Linear(in_features=128, out_features=1, bias=True)
+  (fc_video_loc): Linear(in_features=128, out_features=2, bias=True)
+  (fc_video_ctr): Linear(in_features=128, out_features=1, bias=True)
+  (fc_text): Sequential(
+    (0): Linear(in_features=128, out_features=128, bias=True)
+    (1): ReLU(inplace=True)
+    (2): Dropout(p=0.5, inplace=False)
+    (3): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+  )
+  (fc_text_cls): Linear(in_features=128, out_features=1, bias=True)
+  (fc_text_loc): Linear(in_features=128, out_features=2, bias=True)
+  (fc_text_ctr): Linear(in_features=128, out_features=1, bias=True)
+  (causal_feature_head): Linear(in_features=128, out_features=64, bias=True)
+  (spurious_feature_head): Linear(in_features=128, out_features=64, bias=True)
+)
+[2026-02-03 08:55:37,304] [Train] Epoch: 1/30 Iter: 5/10 Time: 0.277 Data: 0.028 Loss: 0.1611/5.6411/1.2977/0.1806/1.5928/0.3861 Align:0.0000
+[2026-02-03 08:55:48,575] [Train] Epoch: 1/30 Iter: 10/10 Time: 1.265 Data: 0.035 Loss: 0.1529/5.6181/1.2365/0.1690/1.5344/0.3523 Align:0.0000
+[2026-02-03 08:55:48,845] [Eval]  Epoch: 1/30 F-score: 0.5818/0.5818
+
+
+[2026-02-03 08:55:49,980] [Train] Epoch: 2/30 Iter: 5/10 Time: 0.919 Data: 0.034 Loss: 0.1421/4.8782/1.1122/0.1644/1.2512/0.3314 Align:0.0000
+[2026-02-03 08:56:00,447] [Train] Epoch: 2/30 Iter: 10/10 Time: 1.213 Data: 0.034 Loss: 0.1420/5.2047/1.1082/0.1541/1.2602/0.3248 Align:0.0000
+[2026-02-03 08:56:00,665] [Eval]  Epoch: 2/30 F-score: 0.5667/0.5818
+
+
+[2026-02-03 08:56:11,428] [Train] Epoch: 3/30 Iter: 5/10 Time: 1.401 Data: 0.032 Loss: 0.1424/5.4841/1.0817/0.1372/1.2567/0.3127 Align:0.1191
+[2026-02-03 08:56:19,301] [Train] Epoch: 3/30 Iter: 10/10 Time: 1.430 Data: 0.030 Loss: 0.1422/5.0964/1.0738/0.1445/1.2230/0.3175 Align:0.1184
+[2026-02-03 08:56:19,528] [Eval]  Epoch: 3/30 F-score: 0.5871/0.5871
+
+
+[2026-02-03 08:56:37,722] [Train] Epoch: 4/30 Iter: 5/10 Time: 1.745 Data: 0.030 Loss: 0.1412/5.5518/1.0946/0.1570/1.2394/0.3245 Align:0.1299
+[2026-02-03 08:56:40,485] [Train] Epoch: 4/30 Iter: 10/10 Time: 1.596 Data: 0.029 Loss: 0.1406/5.0855/1.0704/0.1578/1.1651/0.2982 Align:0.1292
+[2026-02-03 08:56:40,683] [Eval]  Epoch: 4/30 F-score: 0.5658/0.5871
+
+
+[2026-02-03 08:56:44,348] [Train] Epoch: 5/30 Iter: 5/10 Time: 1.500 Data: 0.028 Loss: 0.1412/4.6843/1.0830/0.1648/1.1293/0.2843 Align:0.1148
+[2026-02-03 08:57:03,542] [Train] Epoch: 5/30 Iter: 10/10 Time: 1.734 Data: 0.028 Loss: 0.1405/5.0813/1.0684/0.1522/1.1604/0.3028 Align:0.1491
+[2026-02-03 08:57:03,741] [Eval]  Epoch: 5/30 F-score: 0.5605/0.5871
+
+
+[2026-02-03 08:57:15,288] [Train] Epoch: 6/30 Iter: 5/10 Time: 1.786 Data: 0.028 Loss: 0.1411/5.0035/1.0817/0.1504/1.1209/0.3126 Align:0.1165
+[2026-02-03 08:57:18,075] [Train] Epoch: 6/30 Iter: 10/10 Time: 1.684 Data: 0.027 Loss: 0.1404/5.0788/1.0692/0.1547/1.1522/0.3090 Align:0.1021
+[2026-02-03 08:57:18,277] [Eval]  Epoch: 6/30 F-score: 0.5583/0.5871
+
+
+[2026-02-03 08:59:26,652] [Train] Epoch: 7/30 Iter: 5/10 Time: 3.529 Data: 0.027 Loss: 0.1402/5.0927/1.0496/0.1545/1.1298/0.3062 Align:0.0929
+[2026-02-03 08:59:30,492] [Train] Epoch: 7/30 Iter: 10/10 Time: 3.332 Data: 0.028 Loss: 0.1409/5.0770/1.0675/0.1608/1.1060/0.2747 Align:0.1314
+[2026-02-03 08:59:30,713] [Eval]  Epoch: 7/30 F-score: 0.5707/0.5871
+
+
+[2026-02-03 09:01:37,550] [Train] Epoch: 8/30 Iter: 5/10 Time: 4.801 Data: 0.028 Loss: 0.1423/4.8024/1.0676/0.1410/0.9954/0.2925 Align:0.1423
+[2026-02-03 09:01:47,677] [Train] Epoch: 8/30 Iter: 10/10 Time: 4.628 Data: 0.028 Loss: 0.1443/5.1108/1.0740/0.1456/0.9364/0.2895 Align:0.1164
+[2026-02-03 09:01:47,878] [Eval]  Epoch: 8/30 F-score: 0.5530/0.5871
+
+
+[2026-02-03 09:02:39,915] [Train] Epoch: 9/30 Iter: 5/10 Time: 4.968 Data: 0.027 Loss: 0.1476/4.6544/1.0781/0.1567/0.8253/0.2860 Align:0.1082
+[2026-02-03 09:02:56,976] [Train] Epoch: 9/30 Iter: 10/10 Time: 4.881 Data: 0.028 Loss: 0.1444/5.1022/1.0595/0.1524/0.9446/0.2848 Align:0.1166
+[2026-02-03 09:02:57,173] [Eval]  Epoch: 9/30 F-score: 0.5395/0.5871
+
+
+[2026-02-03 09:03:24,015] [Train] Epoch: 10/30 Iter: 5/10 Time: 4.907 Data: 0.027 Loss: 0.1479/5.0474/1.0945/0.1456/0.7148/0.2812 Align:0.1307
+[2026-02-03 09:03:37,126] [Train] Epoch: 10/30 Iter: 10/10 Time: 4.793 Data: 0.027 Loss: 0.1457/5.1337/1.0787/0.1545/0.6261/0.2839 Align:0.0996
+[2026-02-03 09:03:37,351] [Eval]  Epoch: 10/30 F-score: 0.5728/0.5871
+
+
+[2026-02-03 09:03:41,000] [Train] Epoch: 11/30 Iter: 5/10 Time: 4.599 Data: 0.027 Loss: 0.1404/5.2324/1.0539/0.1579/0.9834/0.2785 Align:0.1102
+[2026-02-03 09:03:52,969] [Train] Epoch: 11/30 Iter: 10/10 Time: 4.499 Data: 0.027 Loss: 0.1373/5.0746/1.0716/0.1505/1.1299/0.2969 Align:0.1548
+[2026-02-03 09:03:53,180] [Eval]  Epoch: 11/30 F-score: 0.5689/0.5871
+
+
+[2026-02-03 09:04:04,426] [Train] Epoch: 12/30 Iter: 5/10 Time: 4.401 Data: 0.026 Loss: 0.1342/5.4081/1.0582/0.1622/1.2530/0.2817 Align:0.1166
+[2026-02-03 09:04:13,224] [Train] Epoch: 12/30 Iter: 10/10 Time: 4.291 Data: 0.026 Loss: 0.1358/5.0579/1.0634/0.1587/1.3012/0.2764 Align:0.1060
+[2026-02-03 09:04:13,413] [Eval]  Epoch: 12/30 F-score: 0.5595/0.5871
+
+
+[2026-02-03 09:04:15,801] [Train] Epoch: 13/30 Iter: 5/10 Time: 4.138 Data: 0.026 Loss: 0.1357/5.7012/1.0565/0.1493/1.2493/0.2826 Align:0.1201
+[2026-02-03 09:05:21,912] [Train] Epoch: 13/30 Iter: 10/10 Time: 4.488 Data: 0.026 Loss: 0.1355/5.0652/1.0655/0.1506/1.2642/0.2810 Align:0.1569
+[2026-02-03 09:05:22,127] [Eval]  Epoch: 13/30 F-score: 0.5664/0.5871
+
+
+[2026-02-03 09:05:26,606] [Train] Epoch: 14/30 Iter: 5/10 Time: 4.355 Data: 0.026 Loss: 0.1362/4.8112/1.0989/0.1479/1.1234/0.2749 Align:0.1273
+[2026-02-03 09:05:37,409] [Train] Epoch: 14/30 Iter: 10/10 Time: 4.276 Data: 0.026 Loss: 0.1356/5.0599/1.0669/0.1478/1.1522/0.2797 Align:0.1298
+[2026-02-03 09:05:37,625] [Eval]  Epoch: 14/30 F-score: 0.5790/0.5871
+
+
+[2026-02-03 09:05:41,875] [Train] Epoch: 15/30 Iter: 5/10 Time: 4.158 Data: 0.026 Loss: 0.1366/5.4769/1.0756/0.1507/1.1660/0.2732 Align:0.1344
+[2026-02-03 09:07:45,276] [Train] Epoch: 15/30 Iter: 10/10 Time: 4.842 Data: 0.026 Loss: 0.1365/5.0802/1.0698/0.1473/1.1289/0.2441 Align:0.1132
+[2026-02-03 09:07:45,471] [Eval]  Epoch: 15/30 F-score: 0.5750/0.5871
+
+
+[2026-02-03 09:07:56,111] [Train] Epoch: 16/30 Iter: 5/10 Time: 4.755 Data: 0.026 Loss: 0.1373/5.0109/1.0579/0.1332/1.0433/0.2608 Align:0.1127
+[2026-02-03 09:08:05,177] [Train] Epoch: 16/30 Iter: 10/10 Time: 4.663 Data: 0.026 Loss: 0.1366/5.0753/1.0611/0.1433/0.9869/0.2561 Align:0.1086
+[2026-02-03 09:08:05,398] [Eval]  Epoch: 16/30 F-score: 0.5671/0.5871
+
+
+[2026-02-03 09:08:14,861] [Train] Epoch: 17/30 Iter: 5/10 Time: 4.579 Data: 0.026 Loss: 0.1372/4.9672/1.0761/0.1479/0.9925/0.2520 Align:0.1113
+[2026-02-03 09:08:26,424] [Train] Epoch: 17/30 Iter: 10/10 Time: 4.512 Data: 0.026 Loss: 0.1374/5.0597/1.0672/0.1457/0.9566/0.2540 Align:0.1095
+[2026-02-03 09:08:26,656] [Eval]  Epoch: 17/30 F-score: 0.5680/0.5871
+
+
+[2026-02-03 09:08:35,270] [Train] Epoch: 18/30 Iter: 5/10 Time: 4.433 Data: 0.026 Loss: 0.1383/4.7374/1.0599/0.1589/0.7519/0.2535 Align:0.1281
+[2026-02-03 09:10:39,283] [Train] Epoch: 18/30 Iter: 10/10 Time: 4.998 Data: 0.026 Loss: 0.1381/5.0397/1.0708/0.1484/0.8475/0.2385 Align:0.1200
+[2026-02-03 09:10:39,492] [Eval]  Epoch: 18/30 F-score: 0.5717/0.5871
+
+
+[2026-02-03 09:11:39,815] [Train] Epoch: 19/30 Iter: 5/10 Time: 5.189 Data: 0.026 Loss: 0.1395/4.6456/1.0622/0.1360/0.9134/0.2378 Align:0.1126
+[2026-02-03 09:11:42,883] [Train] Epoch: 19/30 Iter: 10/10 Time: 5.069 Data: 0.026 Loss: 0.1390/5.0315/1.0730/0.1379/0.8021/0.2370 Align:0.1075
+[2026-02-03 09:11:43,090] [Eval]  Epoch: 19/30 F-score: 0.5621/0.5871
+
+
+[2026-02-03 09:11:55,083] [Train] Epoch: 20/30 Iter: 5/10 Time: 5.000 Data: 0.026 Loss: 0.1373/5.7034/1.0513/0.1403/0.7308/0.2347 Align:0.1062
+[2026-02-03 09:12:08,359] [Train] Epoch: 20/30 Iter: 10/10 Time: 4.942 Data: 0.025 Loss: 0.1384/5.0495/1.0686/0.1421/0.7107/0.2321 Align:0.1337
+[2026-02-03 09:12:08,547] [Eval]  Epoch: 20/30 F-score: 0.5537/0.5871
+
+
+[2026-02-03 09:12:29,845] [Train] Epoch: 21/30 Iter: 5/10 Time: 4.925 Data: 0.025 Loss: 0.1383/5.5560/1.0455/0.1415/0.8135/0.2305 Align:0.1102
+[2026-02-03 09:13:22,335] [Train] Epoch: 21/30 Iter: 10/10 Time: 5.058 Data: 0.025 Loss: 0.1390/5.0553/1.0674/0.1440/0.7532/0.2278 Align:0.0987
+[2026-02-03 09:13:22,546] [Eval]  Epoch: 21/30 F-score: 0.5532/0.5871
+
+
+[2026-02-03 09:13:25,326] [Train] Epoch: 22/30 Iter: 5/10 Time: 4.953 Data: 0.025 Loss: 0.1405/4.6109/1.0835/0.1493/0.8078/0.2184 Align:0.1258
+[2026-02-03 09:14:26,032] [Train] Epoch: 22/30 Iter: 10/10 Time: 5.117 Data: 0.025 Loss: 0.1407/5.0788/1.0666/0.1471/0.7957/0.2268 Align:0.1016
+[2026-02-03 09:14:26,232] [Eval]  Epoch: 22/30 F-score: 0.5316/0.5871
+
+
+[2026-02-03 09:14:37,547] [Train] Epoch: 23/30 Iter: 5/10 Time: 5.053 Data: 0.025 Loss: 0.1417/5.4230/1.0575/0.1618/0.7736/0.2285 Align:0.1009
+[2026-02-03 09:15:29,955] [Train] Epoch: 23/30 Iter: 10/10 Time: 5.171 Data: 0.025 Loss: 0.1429/5.0889/1.0648/0.1546/0.7242/0.2231 Align:0.1060
+[2026-02-03 09:15:30,195] [Eval]  Epoch: 23/30 F-score: 0.5286/0.5871
+
+
+[2026-02-03 09:15:47,904] [Train] Epoch: 24/30 Iter: 5/10 Time: 5.136 Data: 0.025 Loss: 0.1405/5.3872/1.0439/0.1723/0.8342/0.2151 Align:0.1086
+[2026-02-03 09:15:51,475] [Train] Epoch: 24/30 Iter: 10/10 Time: 5.044 Data: 0.025 Loss: 0.1426/5.0802/1.0633/0.1580/0.8979/0.2223 Align:0.1233
+[2026-02-03 09:15:51,730] [Eval]  Epoch: 24/30 F-score: 0.4070/0.5871
+
+
+[2026-02-03 09:16:03,782] [Train] Epoch: 25/30 Iter: 5/10 Time: 4.991 Data: 0.025 Loss: 0.1477/5.5030/1.1018/0.1486/0.9617/0.2316 Align:0.1166
+[2026-02-03 09:16:06,042] [Train] Epoch: 25/30 Iter: 10/10 Time: 4.900 Data: 0.025 Loss: 0.1448/5.1152/1.0721/0.1486/0.8280/0.2199 Align:0.1198
+[2026-02-03 09:16:06,258] [Eval]  Epoch: 25/30 F-score: 0.5565/0.5871
+
+
+[2026-02-03 09:16:17,923] [Train] Epoch: 26/30 Iter: 5/10 Time: 4.849 Data: 0.025 Loss: 0.1391/4.9123/1.1102/0.1633/0.9264/0.2093 Align:0.1042
+[2026-02-03 09:16:28,812] [Train] Epoch: 26/30 Iter: 10/10 Time: 4.798 Data: 0.025 Loss: 0.1380/5.0417/1.0663/0.1510/1.0583/0.1996 Align:0.0964
+[2026-02-03 09:16:29,000] [Eval]  Epoch: 26/30 F-score: 0.5721/0.5871
+
+
+[2026-02-03 09:17:21,561] [Train] Epoch: 27/30 Iter: 5/10 Time: 4.906 Data: 0.025 Loss: 0.1355/4.9925/1.0759/0.1500/1.1595/0.2001 Align:0.1082
+[2026-02-03 09:17:43,646] [Train] Epoch: 27/30 Iter: 10/10 Time: 4.897 Data: 0.025 Loss: 0.1377/5.0386/1.0554/0.1525/1.1399/0.2129 Align:0.1272
+[2026-02-03 09:17:43,848] [Eval]  Epoch: 27/30 F-score: 0.5566/0.5871
+
+
+[2026-02-03 09:17:54,529] [Train] Epoch: 28/30 Iter: 5/10 Time: 4.847 Data: 0.025 Loss: 0.1385/5.5834/1.0160/0.1419/0.8882/0.2194 Align:0.1188
+[2026-02-03 09:18:12,404] [Train] Epoch: 28/30 Iter: 10/10 Time: 4.824 Data: 0.025 Loss: 0.1382/5.0570/1.0484/0.1477/0.9763/0.1973 Align:0.0971
+[2026-02-03 09:18:12,605] [Eval]  Epoch: 28/30 F-score: 0.5760/0.5871
+
+
+[2026-02-03 09:18:24,503] [Train] Epoch: 29/30 Iter: 5/10 Time: 4.781 Data: 0.025 Loss: 0.1393/4.6642/1.0502/0.1533/0.8443/0.2256 Align:0.1304
+[2026-02-03 09:18:34,514] [Train] Epoch: 29/30 Iter: 10/10 Time: 4.733 Data: 0.025 Loss: 0.1384/5.0388/1.0581/0.1507/0.8877/0.2039 Align:0.1029
+[2026-02-03 09:18:34,711] [Eval]  Epoch: 29/30 F-score: 0.5852/0.5871
+
+
+[2026-02-03 09:18:37,524] [Train] Epoch: 30/30 Iter: 5/10 Time: 4.662 Data: 0.025 Loss: 0.1380/4.9065/1.0582/0.1433/0.8621/0.2162 Align:0.1315
+[2026-02-03 09:18:56,884] [Train] Epoch: 30/30 Iter: 10/10 Time: 4.649 Data: 0.025 Loss: 0.1385/5.0360/1.0465/0.1443/0.8425/0.1993 Align:0.0929
+[2026-02-03 09:18:57,091] [Eval]  Epoch: 30/30 F-score: 0.5600/0.5871
+
+
+[2026-02-03 09:18:57,095] Start training on data/TVSum/splits.yml: split 2
+[2026-02-03 09:18:57,120] Causal Alignment Discovery enabled for TVSum (Intervention Dissimilarity)
+[2026-02-03 09:18:57,129] 
+Model_VideoSumm(
+  (proj_fc_video): Sequential(
+    (0): Linear(in_features=1024, out_features=128, bias=True)
+    (1): Dropout(p=0.1, inplace=False)
+  )
+  (proj_fc_text): Sequential(
+    (0): Linear(in_features=768, out_features=128, bias=True)
+    (1): Dropout(p=0.1, inplace=False)
+  )
+  (multiway_list): ModuleList(
+    (0-1): 2 x MultiWayTransformer(
+      (norm1_fused): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (attn_fusion): MultiHeadAttention(q_dims=128, k_dims=128, v_dims=128, h_dims=128, o_dims=128, heads=8, p=0.5, bias=True)
+      (norm2_video): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (ffn_video): FFN(
+        (fc1): Linear(in_features=128, out_features=512, bias=True)
+        (act): GELU(approximate='none')
+        (drop1): Dropout(p=0.5, inplace=False)
+        (fc2): Linear(in_features=512, out_features=128, bias=True)
+        (drop2): Dropout(p=0.5, inplace=False)
+      )
+      (norm2_text): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (ffn_text): FFN(
+        (fc1): Linear(in_features=128, out_features=512, bias=True)
+        (act): GELU(approximate='none')
+        (drop1): Dropout(p=0.5, inplace=False)
+        (fc2): Linear(in_features=512, out_features=128, bias=True)
+        (drop2): Dropout(p=0.5, inplace=False)
+      )
+    )
+  )
+  (norm_video): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+  (norm_text): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+  (fc_video): Sequential(
+    (0): Linear(in_features=128, out_features=128, bias=True)
+    (1): ReLU(inplace=True)
+    (2): Dropout(p=0.5, inplace=False)
+    (3): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+  )
+  (fc_video_cls): Linear(in_features=128, out_features=1, bias=True)
+  (fc_video_loc): Linear(in_features=128, out_features=2, bias=True)
+  (fc_video_ctr): Linear(in_features=128, out_features=1, bias=True)
+  (fc_text): Sequential(
+    (0): Linear(in_features=128, out_features=128, bias=True)
+    (1): ReLU(inplace=True)
+    (2): Dropout(p=0.5, inplace=False)
+    (3): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+  )
+  (fc_text_cls): Linear(in_features=128, out_features=1, bias=True)
+  (fc_text_loc): Linear(in_features=128, out_features=2, bias=True)
+  (fc_text_ctr): Linear(in_features=128, out_features=1, bias=True)
+  (causal_feature_head): Linear(in_features=128, out_features=64, bias=True)
+  (spurious_feature_head): Linear(in_features=128, out_features=64, bias=True)
+)
+[2026-02-03 09:19:06,918] [Train] Epoch: 1/30 Iter: 5/10 Time: 1.957 Data: 0.032 Loss: 0.1624/5.1540/1.3171/0.1728/1.6285/0.3643 Align:0.0000
+[2026-02-03 09:19:08,891] [Train] Epoch: 1/30 Iter: 10/10 Time: 1.176 Data: 0.033 Loss: 0.1524/5.6255/1.2396/0.1596/1.4715/0.3533 Align:0.0000
+[2026-02-03 09:19:09,179] [Eval]  Epoch: 1/30 F-score: 0.6174/0.6174
+
+
+[2026-02-03 09:19:10,487] [Train] Epoch: 2/30 Iter: 5/10 Time: 0.871 Data: 0.029 Loss: 0.1437/4.6831/1.1318/0.1497/1.1373/0.3444 Align:0.0000
+[2026-02-03 09:19:20,755] [Train] Epoch: 2/30 Iter: 10/10 Time: 1.167 Data: 0.028 Loss: 0.1434/5.2805/1.1196/0.1534/1.1632/0.3577 Align:0.0000
+[2026-02-03 09:19:20,973] [Eval]  Epoch: 2/30 F-score: 0.6095/0.6174
+
+
+[2026-02-03 09:19:23,385] [Train] Epoch: 3/30 Iter: 5/10 Time: 1.030 Data: 0.027 Loss: 0.1431/5.1321/1.1142/0.1410/1.0915/0.3601 Align:0.1215
+[2026-02-03 09:19:35,453] [Train] Epoch: 3/30 Iter: 10/10 Time: 1.260 Data: 0.027 Loss: 0.1421/5.1890/1.1036/0.1419/1.1357/0.3309 Align:0.1080
+[2026-02-03 09:19:35,689] [Eval]  Epoch: 3/30 F-score: 0.6056/0.6174
+
+
+[2026-02-03 09:19:38,670] [Train] Epoch: 4/30 Iter: 5/10 Time: 1.165 Data: 0.026 Loss: 0.1419/5.4182/1.1203/0.1513/1.0247/0.3428 Align:0.1126
+[2026-02-03 09:19:56,302] [Train] Epoch: 4/30 Iter: 10/10 Time: 1.461 Data: 0.026 Loss: 0.1412/5.1728/1.0949/0.1466/1.1263/0.3328 Align:0.1237
+[2026-02-03 09:19:56,509] [Eval]  Epoch: 4/30 F-score: 0.6022/0.6174
+
+
+[2026-02-03 09:20:06,608] [Train] Epoch: 5/30 Iter: 5/10 Time: 1.523 Data: 0.026 Loss: 0.1394/5.5617/1.0801/0.1472/1.2464/0.3188 Align:0.1065
+[2026-02-03 09:20:18,414] [Train] Epoch: 5/30 Iter: 10/10 Time: 1.607 Data: 0.026 Loss: 0.1409/5.1660/1.0843/0.1484/1.1561/0.3075 Align:0.1087
+[2026-02-03 09:20:18,623] [Eval]  Epoch: 5/30 F-score: 0.6013/0.6174
+
+
+[2026-02-03 09:20:31,571] [Train] Epoch: 6/30 Iter: 5/10 Time: 1.696 Data: 0.025 Loss: 0.1396/5.3982/1.0872/0.1709/1.1657/0.3089 Align:0.0964
+[2026-02-03 09:22:37,900] [Train] Epoch: 6/30 Iter: 10/10 Time: 3.660 Data: 0.025 Loss: 0.1418/5.1762/1.0947/0.1692/1.1246/0.2963 Align:0.1220
+[2026-02-03 09:22:38,119] [Eval]  Epoch: 6/30 F-score: 0.6073/0.6174
+
+
+[2026-02-03 09:22:51,309] [Train] Epoch: 7/30 Iter: 5/10 Time: 3.581 Data: 0.025 Loss: 0.1461/5.6078/1.0913/0.1555/1.1295/0.3114 Align:0.1167
+[2026-02-03 09:23:09,128] [Train] Epoch: 7/30 Iter: 10/10 Time: 3.580 Data: 0.025 Loss: 0.1431/5.2197/1.0944/0.1521/1.1575/0.2914 Align:0.1166
+[2026-02-03 09:23:09,350] [Eval]  Epoch: 7/30 F-score: 0.6076/0.6174
+
+
+[2026-02-03 09:23:17,997] [Train] Epoch: 8/30 Iter: 5/10 Time: 3.457 Data: 0.025 Loss: 0.1401/5.0846/1.1021/0.1534/1.1497/0.2984 Align:0.1051
+[2026-02-03 09:23:37,229] [Train] Epoch: 8/30 Iter: 10/10 Time: 3.481 Data: 0.025 Loss: 0.1405/5.1642/1.0816/0.1528/1.1804/0.2852 Align:0.1033
+[2026-02-03 09:23:37,439] [Eval]  Epoch: 8/30 F-score: 0.6052/0.6174
+
+
+[2026-02-03 09:23:40,344] [Train] Epoch: 9/30 Iter: 5/10 Time: 3.310 Data: 0.025 Loss: 0.1409/5.5104/1.0880/0.1487/1.0759/0.2787 Align:0.1145
+[2026-02-03 09:23:52,841] [Train] Epoch: 9/30 Iter: 10/10 Time: 3.265 Data: 0.025 Loss: 0.1404/5.1543/1.0867/0.1477/1.1917/0.2833 Align:0.1023
+[2026-02-03 09:23:53,054] [Eval]  Epoch: 9/30 F-score: 0.6103/0.6174
+
+
+[2026-02-03 09:24:04,640] [Train] Epoch: 10/30 Iter: 5/10 Time: 3.216 Data: 0.025 Loss: 0.1403/4.9585/1.0950/0.1403/1.1966/0.2624 Align:0.1116
+[2026-02-03 09:24:14,006] [Train] Epoch: 10/30 Iter: 10/10 Time: 3.148 Data: 0.025 Loss: 0.1397/5.1611/1.0823/0.1362/1.1902/0.2574 Align:0.1228
+[2026-02-03 09:24:14,243] [Eval]  Epoch: 10/30 F-score: 0.6093/0.6174
+
+
+[2026-02-03 09:24:25,653] [Train] Epoch: 11/30 Iter: 5/10 Time: 3.107 Data: 0.025 Loss: 0.1395/5.7340/1.0564/0.1483/1.2078/0.2673 Align:0.1285
+[2026-02-03 09:24:29,291] [Train] Epoch: 11/30 Iter: 10/10 Time: 2.999 Data: 0.025 Loss: 0.1400/5.1589/1.0881/0.1456/1.2008/0.2698 Align:0.1264
+[2026-02-03 09:24:29,506] [Eval]  Epoch: 11/30 F-score: 0.6070/0.6174
+
+
+[2026-02-03 09:25:32,315] [Train] Epoch: 12/30 Iter: 5/10 Time: 3.415 Data: 0.025 Loss: 0.1397/4.9970/1.0427/0.1494/1.1436/0.2633 Align:0.1155
+[2026-02-03 09:25:42,466] [Train] Epoch: 12/30 Iter: 10/10 Time: 3.357 Data: 0.025 Loss: 0.1400/5.1518/1.0814/0.1483/1.1973/0.2614 Align:0.1016
+[2026-02-03 09:25:42,694] [Eval]  Epoch: 12/30 F-score: 0.6078/0.6174
+
+
+[2026-02-03 09:25:54,659] [Train] Epoch: 13/30 Iter: 5/10 Time: 3.318 Data: 0.025 Loss: 0.1399/4.8732/1.1080/0.1502/1.1563/0.2605 Align:0.1087
+[2026-02-03 09:26:03,459] [Train] Epoch: 13/30 Iter: 10/10 Time: 3.259 Data: 0.025 Loss: 0.1397/5.1530/1.0881/0.1501/1.1956/0.2657 Align:0.1335
+[2026-02-03 09:26:03,680] [Eval]  Epoch: 13/30 F-score: 0.6043/0.6174
+
+
+[2026-02-03 09:26:15,715] [Train] Epoch: 14/30 Iter: 5/10 Time: 3.227 Data: 0.025 Loss: 0.1397/4.9613/1.0866/0.1467/1.1752/0.2536 Align:0.1163
+[2026-02-03 09:26:26,831] [Train] Epoch: 14/30 Iter: 10/10 Time: 3.191 Data: 0.024 Loss: 0.1391/5.1499/1.0825/0.1428/1.1917/0.2499 Align:0.1110
+[2026-02-03 09:26:27,055] [Eval]  Epoch: 14/30 F-score: 0.6083/0.6174
+
+
+[2026-02-03 09:26:45,146] [Train] Epoch: 15/30 Iter: 5/10 Time: 3.206 Data: 0.024 Loss: 0.1418/4.5407/1.0853/0.1448/1.1358/0.2396 Align:0.0984
+[2026-02-03 09:26:48,706] [Train] Epoch: 15/30 Iter: 10/10 Time: 3.123 Data: 0.024 Loss: 0.1403/5.1529/1.0849/0.1469/1.1746/0.2489 Align:0.1123
+[2026-02-03 09:26:48,951] [Eval]  Epoch: 15/30 F-score: 0.6206/0.6206
+
+
+[2026-02-03 09:27:03,550] [Train] Epoch: 16/30 Iter: 5/10 Time: 3.116 Data: 0.024 Loss: 0.1396/5.8353/1.0733/0.1456/1.1824/0.2483 Align:0.1224
+[2026-02-03 09:27:21,794] [Train] Epoch: 16/30 Iter: 10/10 Time: 3.133 Data: 0.024 Loss: 0.1402/5.1505/1.0874/0.1470/1.1517/0.2470 Align:0.0990
+[2026-02-03 09:27:22,024] [Eval]  Epoch: 16/30 F-score: 0.6223/0.6223
+
+
+[2026-02-03 09:27:35,061] [Train] Epoch: 17/30 Iter: 5/10 Time: 3.117 Data: 0.024 Loss: 0.1419/4.6852/1.0946/0.1470/1.0392/0.2363 Align:0.0883
+[2026-02-03 09:27:54,591] [Train] Epoch: 17/30 Iter: 10/10 Time: 3.140 Data: 0.024 Loss: 0.1406/5.1475/1.0839/0.1474/1.1272/0.2434 Align:0.1353
+[2026-02-03 09:27:54,820] [Eval]  Epoch: 17/30 F-score: 0.6111/0.6223
+
+
+[2026-02-03 09:28:55,595] [Train] Epoch: 18/30 Iter: 5/10 Time: 3.398 Data: 0.024 Loss: 0.1389/5.7241/1.1037/0.1389/1.2040/0.2395 Align:0.1046
+[2026-02-03 09:28:58,029] [Train] Epoch: 18/30 Iter: 10/10 Time: 3.317 Data: 0.024 Loss: 0.1408/5.1503/1.0818/0.1385/1.1031/0.2361 Align:0.1200
+[2026-02-03 09:28:58,246] [Eval]  Epoch: 18/30 F-score: 0.6063/0.6223
+
+
+[2026-02-03 09:29:08,922] [Train] Epoch: 19/30 Iter: 5/10 Time: 3.285 Data: 0.024 Loss: 0.1418/5.0229/1.0948/0.1423/0.9134/0.2380 Align:0.1077
+[2026-02-03 09:29:19,278] [Train] Epoch: 19/30 Iter: 10/10 Time: 3.253 Data: 0.024 Loss: 0.1412/5.1860/1.0824/0.1449/0.9786/0.2322 Align:0.1236
+[2026-02-03 09:29:19,523] [Eval]  Epoch: 19/30 F-score: 0.6261/0.6261
+
+
+[2026-02-03 09:29:32,036] [Train] Epoch: 20/30 Iter: 5/10 Time: 3.234 Data: 0.024 Loss: 0.1415/4.7548/1.0548/0.1534/0.8496/0.2324 Align:0.1336
+[2026-02-03 09:29:42,112] [Train] Epoch: 20/30 Iter: 10/10 Time: 3.203 Data: 0.024 Loss: 0.1409/5.1765/1.0753/0.1531/0.9072/0.2275 Align:0.1424
+[2026-02-03 09:29:42,339] [Eval]  Epoch: 20/30 F-score: 0.6128/0.6261
+
+
+[2026-02-03 09:29:45,617] [Train] Epoch: 21/30 Iter: 5/10 Time: 3.141 Data: 0.024 Loss: 0.1422/5.4602/1.0414/0.1577/0.7656/0.2243 Align:0.1201
+[2026-02-03 09:30:46,338] [Train] Epoch: 21/30 Iter: 10/10 Time: 3.355 Data: 0.024 Loss: 0.1422/5.2106/1.0822/0.1578/0.7829/0.2177 Align:0.1242
+[2026-02-03 09:30:46,551] [Eval]  Epoch: 21/30 F-score: 0.6094/0.6261
+
+
+[2026-02-03 09:30:49,370] [Train] Epoch: 22/30 Iter: 5/10 Time: 3.290 Data: 0.024 Loss: 0.1437/5.3638/1.0703/0.1540/0.6719/0.2181 Align:0.1320
+[2026-02-03 09:31:07,950] [Train] Epoch: 22/30 Iter: 10/10 Time: 3.300 Data: 0.024 Loss: 0.1421/5.1794/1.0833/0.1683/0.7155/0.2171 Align:0.1076
+[2026-02-03 09:31:08,190] [Eval]  Epoch: 22/30 F-score: 0.6306/0.6306
+
+
+[2026-02-03 09:31:11,621] [Train] Epoch: 23/30 Iter: 5/10 Time: 3.242 Data: 0.024 Loss: 0.1363/4.9914/1.1039/0.1476/1.3100/0.2135 Align:0.1270
+[2026-02-03 09:31:28,682] [Train] Epoch: 23/30 Iter: 10/10 Time: 3.246 Data: 0.024 Loss: 0.1362/5.1459/1.0764/0.1503/1.2732/0.2108 Align:0.0971
+[2026-02-03 09:31:28,892] [Eval]  Epoch: 23/30 F-score: 0.6187/0.6306
+
+
+[2026-02-03 09:31:37,697] [Train] Epoch: 24/30 Iter: 5/10 Time: 3.214 Data: 0.024 Loss: 0.1405/4.9639/1.0733/0.1529/1.1659/0.2227 Align:0.1007
+[2026-02-03 09:31:49,186] [Train] Epoch: 24/30 Iter: 10/10 Time: 3.195 Data: 0.024 Loss: 0.1388/5.1407/1.0856/0.1461/1.2062/0.2240 Align:0.1244
+[2026-02-03 09:31:49,437] [Eval]  Epoch: 24/30 F-score: 0.6322/0.6322
+
+
+[2026-02-03 09:32:07,745] [Train] Epoch: 25/30 Iter: 5/10 Time: 3.205 Data: 0.024 Loss: 0.1382/5.4574/1.0966/0.1586/1.1214/0.2109 Align:0.0843
+[2026-02-03 09:32:23,926] [Train] Epoch: 25/30 Iter: 10/10 Time: 3.205 Data: 0.024 Loss: 0.1392/5.1453/1.0757/0.1510/1.1084/0.2431 Align:0.1452
+[2026-02-03 09:32:24,154] [Eval]  Epoch: 25/30 F-score: 0.6126/0.6322
+
+
+[2026-02-03 09:32:35,789] [Train] Epoch: 26/30 Iter: 5/10 Time: 3.188 Data: 0.024 Loss: 0.1387/4.4166/1.1017/0.1455/1.0434/0.2335 Align:0.1049
+[2026-02-03 09:32:46,177] [Train] Epoch: 26/30 Iter: 10/10 Time: 3.167 Data: 0.024 Loss: 0.1384/5.1487/1.0807/0.1526/0.9837/0.2134 Align:0.0998
+[2026-02-03 09:32:46,412] [Eval]  Epoch: 26/30 F-score: 0.6363/0.6363
+
+
+[2026-02-03 09:34:52,266] [Train] Epoch: 27/30 Iter: 5/10 Time: 3.582 Data: 0.024 Loss: 0.1383/5.6004/1.0855/0.1334/0.9164/0.2230 Align:0.1023
+[2026-02-03 09:35:06,350] [Train] Epoch: 27/30 Iter: 10/10 Time: 3.568 Data: 0.024 Loss: 0.1385/5.1335/1.0767/0.1466/0.9114/0.2185 Align:0.1264
+[2026-02-03 09:35:06,598] [Eval]  Epoch: 27/30 F-score: 0.6296/0.6363
+
+
+[2026-02-03 09:35:17,915] [Train] Epoch: 28/30 Iter: 5/10 Time: 3.544 Data: 0.024 Loss: 0.1392/4.9165/1.0373/0.1516/0.8095/0.2175 Align:0.0915
+[2026-02-03 09:35:36,557] [Train] Epoch: 28/30 Iter: 10/10 Time: 3.547 Data: 0.024 Loss: 0.1397/5.1501/1.0732/0.1536/0.7514/0.2223 Align:0.1188
+[2026-02-03 09:35:36,775] [Eval]  Epoch: 28/30 F-score: 0.6241/0.6363
+
+
+[2026-02-03 09:35:49,830] [Train] Epoch: 29/30 Iter: 5/10 Time: 3.531 Data: 0.024 Loss: 0.1405/4.4418/1.0667/0.1436/0.6016/0.2172 Align:0.1004
+[2026-02-03 09:36:52,596] [Train] Epoch: 29/30 Iter: 10/10 Time: 3.686 Data: 0.024 Loss: 0.1400/5.1380/1.0683/0.1559/0.6509/0.2157 Align:0.1147
+[2026-02-03 09:36:52,807] [Eval]  Epoch: 29/30 F-score: 0.6197/0.6363
+
+
+[2026-02-03 09:36:55,370] [Train] Epoch: 30/30 Iter: 5/10 Time: 3.633 Data: 0.024 Loss: 0.1402/5.1308/1.0299/0.1436/0.6583/0.2459 Align:0.1255
+[2026-02-03 09:37:05,901] [Train] Epoch: 30/30 Iter: 10/10 Time: 3.607 Data: 0.024 Loss: 0.1412/5.1109/1.0713/0.1448/0.6584/0.2267 Align:0.1103
+[2026-02-03 09:37:06,155] [Eval]  Epoch: 30/30 F-score: 0.5722/0.6363
+
+
+[2026-02-03 09:37:06,159] Start training on data/TVSum/splits.yml: split 3
+[2026-02-03 09:37:06,188] Causal Alignment Discovery enabled for TVSum (Intervention Dissimilarity)
+[2026-02-03 09:37:06,196] 
+Model_VideoSumm(
+  (proj_fc_video): Sequential(
+    (0): Linear(in_features=1024, out_features=128, bias=True)
+    (1): Dropout(p=0.1, inplace=False)
+  )
+  (proj_fc_text): Sequential(
+    (0): Linear(in_features=768, out_features=128, bias=True)
+    (1): Dropout(p=0.1, inplace=False)
+  )
+  (multiway_list): ModuleList(
+    (0-1): 2 x MultiWayTransformer(
+      (norm1_fused): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (attn_fusion): MultiHeadAttention(q_dims=128, k_dims=128, v_dims=128, h_dims=128, o_dims=128, heads=8, p=0.5, bias=True)
+      (norm2_video): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (ffn_video): FFN(
+        (fc1): Linear(in_features=128, out_features=512, bias=True)
+        (act): GELU(approximate='none')
+        (drop1): Dropout(p=0.5, inplace=False)
+        (fc2): Linear(in_features=512, out_features=128, bias=True)
+        (drop2): Dropout(p=0.5, inplace=False)
+      )
+      (norm2_text): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (ffn_text): FFN(
+        (fc1): Linear(in_features=128, out_features=512, bias=True)
+        (act): GELU(approximate='none')
+        (drop1): Dropout(p=0.5, inplace=False)
+        (fc2): Linear(in_features=512, out_features=128, bias=True)
+        (drop2): Dropout(p=0.5, inplace=False)
+      )
+    )
+  )
+  (norm_video): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+  (norm_text): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+  (fc_video): Sequential(
+    (0): Linear(in_features=128, out_features=128, bias=True)
+    (1): ReLU(inplace=True)
+    (2): Dropout(p=0.5, inplace=False)
+    (3): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+  )
+  (fc_video_cls): Linear(in_features=128, out_features=1, bias=True)
+  (fc_video_loc): Linear(in_features=128, out_features=2, bias=True)
+  (fc_video_ctr): Linear(in_features=128, out_features=1, bias=True)
+  (fc_text): Sequential(
+    (0): Linear(in_features=128, out_features=128, bias=True)
+    (1): ReLU(inplace=True)
+    (2): Dropout(p=0.5, inplace=False)
+    (3): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+  )
+  (fc_text_cls): Linear(in_features=128, out_features=1, bias=True)
+  (fc_text_loc): Linear(in_features=128, out_features=2, bias=True)
+  (fc_text_ctr): Linear(in_features=128, out_features=1, bias=True)
+  (causal_feature_head): Linear(in_features=128, out_features=64, bias=True)
+  (spurious_feature_head): Linear(in_features=128, out_features=64, bias=True)
+)
+[2026-02-03 09:37:07,370] [Train] Epoch: 1/30 Iter: 5/10 Time: 0.234 Data: 0.028 Loss: 0.1720/5.1044/1.2851/0.1678/1.6684/0.3708 Align:0.0000
+[2026-02-03 09:37:17,415] [Train] Epoch: 1/30 Iter: 10/10 Time: 1.122 Data: 0.031 Loss: 0.1602/5.7146/1.2195/0.1648/1.4736/0.3401 Align:0.0000
+[2026-02-03 09:37:17,792] [Eval]  Epoch: 1/30 F-score: 0.6052/0.6052
+
+
+[2026-02-03 09:37:27,416] [Train] Epoch: 2/30 Iter: 5/10 Time: 1.389 Data: 0.029 Loss: 0.1433/5.5391/1.1093/0.1572/1.2697/0.3387 Align:0.0000
+[2026-02-03 09:37:28,457] [Train] Epoch: 2/30 Iter: 10/10 Time: 1.094 Data: 0.027 Loss: 0.1433/5.3497/1.1148/0.1522/1.1900/0.3372 Align:0.0000
+[2026-02-03 09:37:28,777] [Eval]  Epoch: 2/30 F-score: 0.6140/0.6140
+
+
+[2026-02-03 09:39:33,722] [Train] Epoch: 3/30 Iter: 5/10 Time: 5.873 Data: 0.026 Loss: 0.1449/5.0633/1.1020/0.1546/1.0842/0.3194 Align:0.1010
+[2026-02-03 09:39:43,191] [Train] Epoch: 3/30 Iter: 10/10 Time: 5.210 Data: 0.026 Loss: 0.1442/5.2457/1.0900/0.1491/1.1252/0.3255 Align:0.1146
+[2026-02-03 09:39:43,466] [Eval]  Epoch: 3/30 F-score: 0.6166/0.6166
+
+
+[2026-02-03 09:39:54,630] [Train] Epoch: 4/30 Iter: 5/10 Time: 4.784 Data: 0.025 Loss: 0.1423/4.9991/1.0668/0.1530/1.1378/0.3093 Align:0.1156
+[2026-02-03 09:39:57,802] [Train] Epoch: 4/30 Iter: 10/10 Time: 4.266 Data: 0.025 Loss: 0.1424/5.2259/1.0883/0.1565/1.1184/0.3115 Align:0.1158
+[2026-02-03 09:39:58,099] [Eval]  Epoch: 4/30 F-score: 0.6111/0.6166
+
+
+[2026-02-03 09:40:09,625] [Train] Epoch: 5/30 Iter: 5/10 Time: 4.048 Data: 0.025 Loss: 0.1414/5.3736/1.0914/0.1404/1.1723/0.3196 Align:0.1403
+[2026-02-03 09:40:19,564] [Train] Epoch: 5/30 Iter: 10/10 Time: 3.842 Data: 0.024 Loss: 0.1416/5.2303/1.0771/0.1442/1.1300/0.3077 Align:0.1059
+[2026-02-03 09:40:19,859] [Eval]  Epoch: 5/30 F-score: 0.5944/0.6166
+
+
+[2026-02-03 09:40:30,172] [Train] Epoch: 6/30 Iter: 5/10 Time: 3.680 Data: 0.024 Loss: 0.1416/4.2518/1.0864/0.1468/1.0761/0.3055 Align:0.0999
+[2026-02-03 09:40:41,459] [Train] Epoch: 6/30 Iter: 10/10 Time: 3.562 Data: 0.024 Loss: 0.1411/5.2219/1.0791/0.1452/1.1467/0.3161 Align:0.1008
+[2026-02-03 09:40:41,717] [Eval]  Epoch: 6/30 F-score: 0.6036/0.6166
+
+
+[2026-02-03 09:40:44,290] [Train] Epoch: 7/30 Iter: 5/10 Time: 3.327 Data: 0.024 Loss: 0.1410/5.6246/1.0630/0.1439/1.0383/0.2866 Align:0.1201
+[2026-02-03 09:40:55,017] [Train] Epoch: 7/30 Iter: 10/10 Time: 3.243 Data: 0.024 Loss: 0.1416/5.2281/1.0761/0.1411/1.0979/0.2962 Align:0.1198
+[2026-02-03 09:40:55,313] [Eval]  Epoch: 7/30 F-score: 0.5945/0.6166
+
+
+[2026-02-03 09:40:57,845] [Train] Epoch: 8/30 Iter: 5/10 Time: 3.060 Data: 0.023 Loss: 0.1423/4.4575/1.0913/0.1546/1.0207/0.2853 Align:0.1022
+[2026-02-03 09:41:09,648] [Train] Epoch: 8/30 Iter: 10/10 Time: 3.017 Data: 0.023 Loss: 0.1426/5.2296/1.0792/0.1559/1.0376/0.2937 Align:0.1439
+[2026-02-03 09:41:09,921] [Eval]  Epoch: 8/30 F-score: 0.6087/0.6166
+
+
+[2026-02-03 09:41:20,529] [Train] Epoch: 9/30 Iter: 5/10 Time: 2.964 Data: 0.024 Loss: 0.1459/5.1215/1.0698/0.1483/0.8802/0.2949 Align:0.1164
+[2026-02-03 09:41:22,807] [Train] Epoch: 9/30 Iter: 10/10 Time: 2.825 Data: 0.024 Loss: 0.1440/5.2612/1.0794/0.1584/0.9502/0.2908 Align:0.1396
+[2026-02-03 09:41:23,064] [Eval]  Epoch: 9/30 F-score: 0.5910/0.6166
+
+
+[2026-02-03 09:43:27,951] [Train] Epoch: 10/30 Iter: 5/10 Time: 3.990 Data: 0.024 Loss: 0.1449/5.4757/1.0565/0.1457/0.8313/0.2782 Align:0.1016
+[2026-02-03 09:43:38,165] [Train] Epoch: 10/30 Iter: 10/10 Time: 3.893 Data: 0.023 Loss: 0.1490/5.2746/1.0844/0.1549/0.6999/0.2792 Align:0.1119
+[2026-02-03 09:43:38,458] [Eval]  Epoch: 10/30 F-score: 0.5512/0.6166
+
+
+[2026-02-03 09:43:51,091] [Train] Epoch: 11/30 Iter: 5/10 Time: 3.828 Data: 0.023 Loss: 0.1525/4.9144/1.0902/0.1472/0.6194/0.2812 Align:0.1376
+[2026-02-03 09:43:53,401] [Train] Epoch: 11/30 Iter: 10/10 Time: 3.675 Data: 0.023 Loss: 0.1472/5.2577/1.0753/0.1493/0.8107/0.2533 Align:0.1181
+[2026-02-03 09:43:53,709] [Eval]  Epoch: 11/30 F-score: 0.5986/0.6166
+
+
+[2026-02-03 09:43:56,675] [Train] Epoch: 12/30 Iter: 5/10 Time: 3.541 Data: 0.023 Loss: 0.1394/4.8526/1.0669/0.1660/1.1301/0.2682 Align:0.1012
+[2026-02-03 09:44:08,171] [Train] Epoch: 12/30 Iter: 10/10 Time: 3.489 Data: 0.023 Loss: 0.1384/5.2420/1.0716/0.1563/1.1751/0.2664 Align:0.1059
+[2026-02-03 09:44:08,470] [Eval]  Epoch: 12/30 F-score: 0.6120/0.6166
+
+
+[2026-02-03 09:44:10,637] [Train] Epoch: 13/30 Iter: 5/10 Time: 3.367 Data: 0.023 Loss: 0.1356/5.2346/1.0727/0.1634/1.2381/0.2638 Align:0.1162
+[2026-02-03 09:44:22,082] [Train] Epoch: 13/30 Iter: 10/10 Time: 3.326 Data: 0.023 Loss: 0.1351/5.2217/1.0725/0.1541/1.2034/0.2631 Align:0.1282
+[2026-02-03 09:44:22,366] [Eval]  Epoch: 13/30 F-score: 0.5925/0.6166
+
+
+[2026-02-03 09:46:26,228] [Train] Epoch: 14/30 Iter: 5/10 Time: 4.120 Data: 0.023 Loss: 0.1354/5.5411/1.0750/0.1400/1.3125/0.2634 Align:0.1118
+[2026-02-03 09:46:29,047] [Train] Epoch: 14/30 Iter: 10/10 Time: 3.993 Data: 0.023 Loss: 0.1356/5.2201/1.0760/0.1478/1.2112/0.2840 Align:0.1125
+[2026-02-03 09:46:29,339] [Eval]  Epoch: 14/30 F-score: 0.5967/0.6166
+
+
+[2026-02-03 09:46:39,879] [Train] Epoch: 15/30 Iter: 5/10 Time: 3.928 Data: 0.023 Loss: 0.1344/4.9652/1.0872/0.1577/1.2044/0.2544 Align:0.1144
+[2026-02-03 09:46:41,977] [Train] Epoch: 15/30 Iter: 10/10 Time: 3.811 Data: 0.023 Loss: 0.1351/5.2126/1.0714/0.1541/1.1337/0.2622 Align:0.1200
+[2026-02-03 09:46:42,265] [Eval]  Epoch: 15/30 F-score: 0.6063/0.6166
+
+
+[2026-02-03 09:46:45,468] [Train] Epoch: 16/30 Iter: 5/10 Time: 3.709 Data: 0.023 Loss: 0.1344/4.7937/1.0496/0.1563/1.1482/0.2615 Align:0.1127
+[2026-02-03 09:46:56,580] [Train] Epoch: 16/30 Iter: 10/10 Time: 3.662 Data: 0.023 Loss: 0.1352/5.2299/1.0782/0.1539/1.0954/0.2726 Align:0.1108
+[2026-02-03 09:46:56,863] [Eval]  Epoch: 16/30 F-score: 0.6039/0.6166
+
+
+[2026-02-03 09:47:06,600] [Train] Epoch: 17/30 Iter: 5/10 Time: 3.610 Data: 0.023 Loss: 0.1362/5.6803/1.0415/0.1318/0.9766/0.2517 Align:0.1092
+[2026-02-03 09:47:17,841] [Train] Epoch: 17/30 Iter: 10/10 Time: 3.570 Data: 0.023 Loss: 0.1360/5.2409/1.0698/0.1457/0.9980/0.2536 Align:0.1044
+[2026-02-03 09:47:18,137] [Eval]  Epoch: 17/30 F-score: 0.6104/0.6166
+
+
+[2026-02-03 09:47:27,758] [Train] Epoch: 18/30 Iter: 5/10 Time: 3.523 Data: 0.023 Loss: 0.1352/5.3168/1.0520/0.1485/0.9781/0.2558 Align:0.1011
+[2026-02-03 09:47:46,910] [Train] Epoch: 18/30 Iter: 10/10 Time: 3.532 Data: 0.023 Loss: 0.1359/5.2290/1.0755/0.1489/0.9733/0.2463 Align:0.1111
+[2026-02-03 09:47:47,247] [Eval]  Epoch: 18/30 F-score: 0.6297/0.6297
+
+
+[2026-02-03 09:47:57,996] [Train] Epoch: 19/30 Iter: 5/10 Time: 3.494 Data: 0.023 Loss: 0.1357/5.8154/1.0895/0.1541/0.9381/0.2534 Align:0.1499
+[2026-02-03 09:48:09,436] [Train] Epoch: 19/30 Iter: 10/10 Time: 3.463 Data: 0.023 Loss: 0.1360/5.2252/1.0739/0.1519/0.9057/0.2458 Align:0.1077
+[2026-02-03 09:48:09,725] [Eval]  Epoch: 19/30 F-score: 0.6073/0.6297
+
+
+[2026-02-03 09:48:12,802] [Train] Epoch: 20/30 Iter: 5/10 Time: 3.390 Data: 0.023 Loss: 0.1361/4.7771/1.0485/0.1426/0.8709/0.2352 Align:0.1106
+[2026-02-03 09:48:24,402] [Train] Epoch: 20/30 Iter: 10/10 Time: 3.363 Data: 0.023 Loss: 0.1353/5.1978/1.0685/0.1496/0.9188/0.2397 Align:0.1361
+[2026-02-03 09:48:24,698] [Eval]  Epoch: 20/30 F-score: 0.6015/0.6297
+
+
+[2026-02-03 09:50:31,779] [Train] Epoch: 21/30 Iter: 5/10 Time: 3.901 Data: 0.023 Loss: 0.1349/5.1356/1.0731/0.1509/0.9590/0.2352 Align:0.1050
+[2026-02-03 09:50:40,805] [Train] Epoch: 21/30 Iter: 10/10 Time: 3.851 Data: 0.023 Loss: 0.1360/5.1674/1.0679/0.1499/0.9301/0.2117 Align:0.1033
+[2026-02-03 09:50:41,089] [Eval]  Epoch: 21/30 F-score: 0.6142/0.6297
+
+
+[2026-02-03 09:51:00,325] [Train] Epoch: 22/30 Iter: 5/10 Time: 3.851 Data: 0.023 Loss: 0.1373/5.2555/1.0758/0.1476/0.8117/0.2264 Align:0.1197
+[2026-02-03 09:51:03,491] [Train] Epoch: 22/30 Iter: 10/10 Time: 3.778 Data: 0.023 Loss: 0.1374/5.1846/1.0586/0.1460/0.7467/0.2087 Align:0.1166
+[2026-02-03 09:51:03,791] [Eval]  Epoch: 22/30 F-score: 0.6014/0.6297
+
+
+[2026-02-03 09:51:14,140] [Train] Epoch: 23/30 Iter: 5/10 Time: 3.740 Data: 0.023 Loss: 0.1370/5.5004/1.0285/0.1463/0.7161/0.2246 Align:0.1076
+[2026-02-03 09:53:21,251] [Train] Epoch: 23/30 Iter: 10/10 Time: 4.211 Data: 0.023 Loss: 0.1385/5.1853/1.0555/0.1431/0.7150/0.2066 Align:0.0976
+[2026-02-03 09:53:21,547] [Eval]  Epoch: 23/30 F-score: 0.6114/0.6297
+
+
+[2026-02-03 09:53:39,017] [Train] Epoch: 24/30 Iter: 5/10 Time: 4.196 Data: 0.023 Loss: 0.1398/5.1510/1.0389/0.1408/0.7403/0.2267 Align:0.1158
+[2026-02-03 09:53:48,482] [Train] Epoch: 24/30 Iter: 10/10 Time: 4.148 Data: 0.023 Loss: 0.1390/5.1802/1.0493/0.1428/0.7512/0.2171 Align:0.0939
+[2026-02-03 09:53:48,782] [Eval]  Epoch: 24/30 F-score: 0.5981/0.6297
+
+
+[2026-02-03 09:53:51,638] [Train] Epoch: 25/30 Iter: 5/10 Time: 4.075 Data: 0.023 Loss: 0.1406/4.9567/1.0320/0.1375/0.6317/0.2131 Align:0.1150
+[2026-02-03 09:54:03,161] [Train] Epoch: 25/30 Iter: 10/10 Time: 4.039 Data: 0.023 Loss: 0.1409/5.1863/1.0479/0.1396/0.7296/0.2066 Align:0.1055
+[2026-02-03 09:54:03,465] [Eval]  Epoch: 25/30 F-score: 0.6018/0.6297
+
+
+[2026-02-03 09:54:14,757] [Train] Epoch: 26/30 Iter: 5/10 Time: 4.004 Data: 0.023 Loss: 0.1406/4.8345/1.0653/0.1592/0.8597/0.2004 Align:0.1039
+[2026-02-03 09:54:17,049] [Train] Epoch: 26/30 Iter: 10/10 Time: 3.936 Data: 0.023 Loss: 0.1444/5.1954/1.0506/0.1529/0.8933/0.2116 Align:0.1334
+[2026-02-03 09:54:17,357] [Eval]  Epoch: 26/30 F-score: 0.5133/0.6297
+
+
+[2026-02-03 09:54:28,344] [Train] Epoch: 27/30 Iter: 5/10 Time: 3.903 Data: 0.023 Loss: 0.1516/4.8607/1.0831/0.1661/0.8269/0.2159 Align:0.1244
+[2026-02-03 09:54:31,351] [Train] Epoch: 27/30 Iter: 10/10 Time: 3.842 Data: 0.023 Loss: 0.1500/5.2826/1.0591/0.1580/0.7413/0.2008 Align:0.1081
+[2026-02-03 09:54:31,720] [Eval]  Epoch: 27/30 F-score: 0.5742/0.6297
+
+
+[2026-02-03 09:54:42,464] [Train] Epoch: 28/30 Iter: 5/10 Time: 3.811 Data: 0.023 Loss: 0.1411/4.9059/1.0719/0.1563/0.9527/0.2112 Align:0.1180
+[2026-02-03 09:54:44,925] [Train] Epoch: 28/30 Iter: 10/10 Time: 3.752 Data: 0.023 Loss: 0.1388/5.2211/1.0437/0.1470/1.0622/0.1976 Align:0.1191
+[2026-02-03 09:54:45,235] [Eval]  Epoch: 28/30 F-score: 0.6039/0.6297
+
+
+[2026-02-03 09:55:03,895] [Train] Epoch: 29/30 Iter: 5/10 Time: 3.752 Data: 0.023 Loss: 0.1353/4.5167/1.0581/0.1526/1.3670/0.1934 Align:0.1119
+[2026-02-03 09:55:07,041] [Train] Epoch: 29/30 Iter: 10/10 Time: 3.698 Data: 0.023 Loss: 0.1357/5.1954/1.0299/0.1545/1.2645/0.1986 Align:0.1172
+[2026-02-03 09:55:07,348] [Eval]  Epoch: 29/30 F-score: 0.6082/0.6297
+
+
+[2026-02-03 09:55:10,717] [Train] Epoch: 30/30 Iter: 5/10 Time: 3.647 Data: 0.023 Loss: 0.1370/4.9906/1.0224/0.1469/1.1932/0.1904 Align:0.1244
+[2026-02-03 09:57:18,815] [Train] Epoch: 30/30 Iter: 10/10 Time: 4.013 Data: 0.023 Loss: 0.1358/5.1838/1.0171/0.1485/1.1670/0.1924 Align:0.1233
+[2026-02-03 09:57:19,132] [Eval]  Epoch: 30/30 F-score: 0.6161/0.6297
+
+
+[2026-02-03 09:57:19,136] Start training on data/TVSum/splits.yml: split 4
+[2026-02-03 09:57:19,163] Causal Alignment Discovery enabled for TVSum (Intervention Dissimilarity)
+[2026-02-03 09:57:19,171] 
+Model_VideoSumm(
+  (proj_fc_video): Sequential(
+    (0): Linear(in_features=1024, out_features=128, bias=True)
+    (1): Dropout(p=0.1, inplace=False)
+  )
+  (proj_fc_text): Sequential(
+    (0): Linear(in_features=768, out_features=128, bias=True)
+    (1): Dropout(p=0.1, inplace=False)
+  )
+  (multiway_list): ModuleList(
+    (0-1): 2 x MultiWayTransformer(
+      (norm1_fused): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (attn_fusion): MultiHeadAttention(q_dims=128, k_dims=128, v_dims=128, h_dims=128, o_dims=128, heads=8, p=0.5, bias=True)
+      (norm2_video): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (ffn_video): FFN(
+        (fc1): Linear(in_features=128, out_features=512, bias=True)
+        (act): GELU(approximate='none')
+        (drop1): Dropout(p=0.5, inplace=False)
+        (fc2): Linear(in_features=512, out_features=128, bias=True)
+        (drop2): Dropout(p=0.5, inplace=False)
+      )
+      (norm2_text): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (ffn_text): FFN(
+        (fc1): Linear(in_features=128, out_features=512, bias=True)
+        (act): GELU(approximate='none')
+        (drop1): Dropout(p=0.5, inplace=False)
+        (fc2): Linear(in_features=512, out_features=128, bias=True)
+        (drop2): Dropout(p=0.5, inplace=False)
+      )
+    )
+  )
+  (norm_video): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+  (norm_text): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+  (fc_video): Sequential(
+    (0): Linear(in_features=128, out_features=128, bias=True)
+    (1): ReLU(inplace=True)
+    (2): Dropout(p=0.5, inplace=False)
+    (3): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+  )
+  (fc_video_cls): Linear(in_features=128, out_features=1, bias=True)
+  (fc_video_loc): Linear(in_features=128, out_features=2, bias=True)
+  (fc_video_ctr): Linear(in_features=128, out_features=1, bias=True)
+  (fc_text): Sequential(
+    (0): Linear(in_features=128, out_features=128, bias=True)
+    (1): ReLU(inplace=True)
+    (2): Dropout(p=0.5, inplace=False)
+    (3): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+  )
+  (fc_text_cls): Linear(in_features=128, out_features=1, bias=True)
+  (fc_text_loc): Linear(in_features=128, out_features=2, bias=True)
+  (fc_text_ctr): Linear(in_features=128, out_features=1, bias=True)
+  (causal_feature_head): Linear(in_features=128, out_features=64, bias=True)
+  (spurious_feature_head): Linear(in_features=128, out_features=64, bias=True)
+)
+[2026-02-03 09:57:29,534] [Train] Epoch: 1/30 Iter: 5/10 Time: 2.072 Data: 0.033 Loss: 0.1635/5.5325/1.3546/0.1826/1.7795/0.3762 Align:0.0000
+[2026-02-03 09:57:30,727] [Train] Epoch: 1/30 Iter: 10/10 Time: 1.155 Data: 0.033 Loss: 0.1547/5.6579/1.2832/0.1678/1.5691/0.3411 Align:0.0000
+[2026-02-03 09:57:30,959] [Eval]  Epoch: 1/30 F-score: 0.5920/0.5920
+
+
+[2026-02-03 09:57:40,725] [Train] Epoch: 2/30 Iter: 5/10 Time: 1.421 Data: 0.031 Loss: 0.1453/5.2132/1.1684/0.1686/1.2896/0.3375 Align:0.0000
+[2026-02-03 09:57:42,554] [Train] Epoch: 2/30 Iter: 10/10 Time: 1.157 Data: 0.029 Loss: 0.1447/5.2760/1.1324/0.1621/1.2705/0.3430 Align:0.0000
+[2026-02-03 09:57:42,747] [Eval]  Epoch: 2/30 F-score: 0.5742/0.5920
+
+
+[2026-02-03 09:57:45,617] [Train] Epoch: 3/30 Iter: 5/10 Time: 1.041 Data: 0.028 Loss: 0.1430/4.9602/1.1200/0.1483/1.2442/0.3308 Align:0.1203
+[2026-02-03 09:59:52,422] [Train] Epoch: 3/30 Iter: 10/10 Time: 5.094 Data: 0.028 Loss: 0.1424/5.1788/1.1052/0.1460/1.2073/0.3134 Align:0.0969
+[2026-02-03 09:59:52,601] [Eval]  Epoch: 3/30 F-score: 0.5651/0.5920
+
+
+[2026-02-03 10:00:04,607] [Train] Epoch: 4/30 Iter: 5/10 Time: 4.709 Data: 0.028 Loss: 0.1415/5.5181/1.0811/0.1435/1.2696/0.3295 Align:0.1404
+[2026-02-03 10:00:07,278] [Train] Epoch: 4/30 Iter: 10/10 Time: 4.187 Data: 0.027 Loss: 0.1419/5.1631/1.0956/0.1520/1.1869/0.3059 Align:0.1055
+[2026-02-03 10:00:07,459] [Eval]  Epoch: 4/30 F-score: 0.5913/0.5920
+
+
+[2026-02-03 10:00:23,803] [Train] Epoch: 5/30 Iter: 5/10 Time: 4.085 Data: 0.027 Loss: 0.1406/5.4522/1.0753/0.1600/1.1504/0.3110 Align:0.1220
+[2026-02-03 10:00:36,961] [Train] Epoch: 5/30 Iter: 10/10 Time: 3.940 Data: 0.026 Loss: 0.1408/5.1540/1.0923/0.1549/1.1083/0.3133 Align:0.1264
+[2026-02-03 10:00:37,136] [Eval]  Epoch: 5/30 F-score: 0.5774/0.5920
+
+
+[2026-02-03 10:00:48,332] [Train] Epoch: 6/30 Iter: 5/10 Time: 3.785 Data: 0.026 Loss: 0.1410/5.3378/1.0913/0.1610/1.1259/0.3037 Align:0.1021
+[2026-02-03 10:00:51,627] [Train] Epoch: 6/30 Iter: 10/10 Time: 3.525 Data: 0.026 Loss: 0.1413/5.1566/1.1015/0.1597/1.1182/0.2975 Align:0.1248
+[2026-02-03 10:00:51,822] [Eval]  Epoch: 6/30 F-score: 0.5937/0.5937
+
+
+[2026-02-03 10:01:09,503] [Train] Epoch: 7/30 Iter: 5/10 Time: 3.526 Data: 0.026 Loss: 0.1426/5.0338/1.0877/0.1672/1.0754/0.2930 Align:0.0904
+[2026-02-03 10:02:01,809] [Train] Epoch: 7/30 Iter: 10/10 Time: 4.021 Data: 0.026 Loss: 0.1440/5.1880/1.0954/0.1647/0.9760/0.3041 Align:0.1096
+[2026-02-03 10:02:02,010] [Eval]  Epoch: 7/30 F-score: 0.6225/0.6225
+
+
+[2026-02-03 10:02:06,047] [Train] Epoch: 8/30 Iter: 5/10 Time: 3.807 Data: 0.026 Loss: 0.1449/5.2102/1.1180/0.1667/0.8739/0.3190 Align:0.1274
+[2026-02-03 10:02:17,906] [Train] Epoch: 8/30 Iter: 10/10 Time: 3.717 Data: 0.025 Loss: 0.1466/5.1969/1.0963/0.1585/0.7472/0.3063 Align:0.1407
+[2026-02-03 10:02:18,093] [Eval]  Epoch: 8/30 F-score: 0.5311/0.6225
+
+
+[2026-02-03 10:02:21,373] [Train] Epoch: 9/30 Iter: 5/10 Time: 3.537 Data: 0.025 Loss: 0.1463/4.7538/1.0935/0.1616/0.5846/0.2848 Align:0.1251
+[2026-02-03 10:03:24,512] [Train] Epoch: 9/30 Iter: 10/10 Time: 4.042 Data: 0.025 Loss: 0.1447/5.1712/1.0902/0.1556/0.8600/0.2869 Align:0.1503
+[2026-02-03 10:03:24,703] [Eval]  Epoch: 9/30 F-score: 0.5984/0.6225
+
+
+[2026-02-03 10:03:36,377] [Train] Epoch: 10/30 Iter: 5/10 Time: 3.952 Data: 0.025 Loss: 0.1419/5.2376/1.0395/0.1467/1.2284/0.2869 Align:0.1187
+[2026-02-03 10:03:40,052] [Train] Epoch: 10/30 Iter: 10/10 Time: 3.791 Data: 0.025 Loss: 0.1410/5.1366/1.0831/0.1471/1.2420/0.2745 Align:0.1237
+[2026-02-03 10:03:40,277] [Eval]  Epoch: 10/30 F-score: 0.5980/0.6225
+
+
+[2026-02-03 10:03:59,450] [Train] Epoch: 11/30 Iter: 5/10 Time: 3.793 Data: 0.026 Loss: 0.1404/5.0694/1.0907/0.1488/1.2598/0.2734 Align:0.1227
+[2026-02-03 10:04:13,915] [Train] Epoch: 11/30 Iter: 10/10 Time: 3.752 Data: 0.026 Loss: 0.1398/5.1415/1.0915/0.1470/1.2482/0.2836 Align:0.1232
+[2026-02-03 10:04:14,113] [Eval]  Epoch: 11/30 F-score: 0.5872/0.6225
+
+
+[2026-02-03 10:04:33,659] [Train] Epoch: 12/30 Iter: 5/10 Time: 3.759 Data: 0.026 Loss: 0.1370/4.6227/1.1104/0.1437/1.2291/0.2774 Align:0.0938
+[2026-02-03 10:04:47,094] [Train] Epoch: 12/30 Iter: 10/10 Time: 3.715 Data: 0.026 Loss: 0.1380/5.1466/1.0963/0.1487/1.2672/0.2618 Align:0.1061
+[2026-02-03 10:04:47,296] [Eval]  Epoch: 12/30 F-score: 0.5913/0.6225
+
+
+[2026-02-03 10:04:58,535] [Train] Epoch: 13/30 Iter: 5/10 Time: 3.656 Data: 0.026 Loss: 0.1364/4.9871/1.1255/0.1489/1.3232/0.2760 Align:0.0860
+[2026-02-03 10:05:08,538] [Train] Epoch: 13/30 Iter: 10/10 Time: 3.592 Data: 0.026 Loss: 0.1380/5.1388/1.0865/0.1448/1.3076/0.2543 Align:0.0975
+[2026-02-03 10:05:08,717] [Eval]  Epoch: 13/30 F-score: 0.6032/0.6225
+
+
+[2026-02-03 10:05:50,594] [Train] Epoch: 14/30 Iter: 5/10 Time: 3.769 Data: 0.026 Loss: 0.1385/5.3019/1.0531/0.1576/1.4102/0.2657 Align:0.1184
+[2026-02-03 10:05:52,910] [Train] Epoch: 14/30 Iter: 10/10 Time: 3.651 Data: 0.026 Loss: 0.1391/5.1451/1.0886/0.1462/1.2438/0.2722 Align:0.1201
+[2026-02-03 10:05:53,094] [Eval]  Epoch: 14/30 F-score: 0.6000/0.6225
+
+
+[2026-02-03 10:05:56,771] [Train] Epoch: 15/30 Iter: 5/10 Time: 3.551 Data: 0.026 Loss: 0.1365/4.7712/1.0669/0.1651/1.1000/0.2646 Align:0.1275
+[2026-02-03 10:06:07,705] [Train] Epoch: 15/30 Iter: 10/10 Time: 3.505 Data: 0.026 Loss: 0.1368/5.1622/1.0879/0.1514/1.1799/0.2427 Align:0.1063
+[2026-02-03 10:06:07,878] [Eval]  Epoch: 15/30 F-score: 0.6084/0.6225
+
+
+[2026-02-03 10:06:20,089] [Train] Epoch: 16/30 Iter: 5/10 Time: 3.471 Data: 0.026 Loss: 0.1365/4.9721/1.0881/0.1519/1.2450/0.2407 Align:0.1092
+[2026-02-03 10:06:23,994] [Train] Epoch: 16/30 Iter: 10/10 Time: 3.387 Data: 0.026 Loss: 0.1369/5.1649/1.0874/0.1487/1.1938/0.2718 Align:0.1303
+[2026-02-03 10:06:24,192] [Eval]  Epoch: 16/30 F-score: 0.6044/0.6225
+
+
+[2026-02-03 10:06:36,388] [Train] Epoch: 17/30 Iter: 5/10 Time: 3.358 Data: 0.026 Loss: 0.1380/5.4079/1.0773/0.1566/1.1590/0.2526 Align:0.1102
+[2026-02-03 10:06:39,321] [Train] Epoch: 17/30 Iter: 10/10 Time: 3.277 Data: 0.025 Loss: 0.1381/5.1604/1.0888/0.1556/1.1075/0.2664 Align:0.1294
+[2026-02-03 10:06:39,516] [Eval]  Epoch: 17/30 F-score: 0.6165/0.6225
+
+
+[2026-02-03 10:06:51,236] [Train] Epoch: 18/30 Iter: 5/10 Time: 3.250 Data: 0.025 Loss: 0.1385/4.4873/1.0976/0.1645/1.0475/0.2715 Align:0.1411
+[2026-02-03 10:07:00,494] [Train] Epoch: 18/30 Iter: 10/10 Time: 3.211 Data: 0.025 Loss: 0.1379/5.1744/1.0876/0.1661/1.0134/0.2439 Align:0.1002
+[2026-02-03 10:07:00,684] [Eval]  Epoch: 18/30 F-score: 0.6375/0.6375
+
+
+[2026-02-03 10:07:03,956] [Train] Epoch: 19/30 Iter: 5/10 Time: 3.142 Data: 0.025 Loss: 0.1394/5.3611/1.0733/0.1508/0.9089/0.2428 Align:0.1183
+[2026-02-03 10:07:22,957] [Train] Epoch: 19/30 Iter: 10/10 Time: 3.159 Data: 0.025 Loss: 0.1380/5.1567/1.0895/0.1544/0.9923/0.2361 Align:0.0886
+[2026-02-03 10:07:23,150] [Eval]  Epoch: 19/30 F-score: 0.6291/0.6375
+
+
+[2026-02-03 10:07:43,001] [Train] Epoch: 20/30 Iter: 5/10 Time: 3.180 Data: 0.025 Loss: 0.1383/5.6458/1.0979/0.1562/0.9442/0.2480 Align:0.1413
+[2026-02-03 10:07:46,299] [Train] Epoch: 20/30 Iter: 10/10 Time: 3.117 Data: 0.025 Loss: 0.1382/5.1681/1.0876/0.1475/0.9159/0.2386 Align:0.1324
+[2026-02-03 10:07:46,487] [Eval]  Epoch: 20/30 F-score: 0.6353/0.6375
+
+
+[2026-02-03 10:08:03,946] [Train] Epoch: 21/30 Iter: 5/10 Time: 3.126 Data: 0.025 Loss: 0.1396/5.6079/1.0855/0.1462/0.9257/0.2278 Align:0.1211
+[2026-02-03 10:08:57,337] [Train] Epoch: 21/30 Iter: 10/10 Time: 3.306 Data: 0.025 Loss: 0.1388/5.1592/1.0804/0.1443/0.8910/0.2296 Align:0.1314
+[2026-02-03 10:08:57,518] [Eval]  Epoch: 21/30 F-score: 0.6361/0.6375
+
+
+[2026-02-03 10:09:06,428] [Train] Epoch: 22/30 Iter: 5/10 Time: 3.271 Data: 0.025 Loss: 0.1364/5.2289/1.0672/0.1472/0.9347/0.2267 Align:0.1264
+[2026-02-03 10:09:17,860] [Train] Epoch: 22/30 Iter: 10/10 Time: 3.248 Data: 0.025 Loss: 0.1376/5.1230/1.0747/0.1464/0.8876/0.2433 Align:0.1243
+[2026-02-03 10:09:18,051] [Eval]  Epoch: 22/30 F-score: 0.6165/0.6375
+
+
+[2026-02-03 10:09:40,264] [Train] Epoch: 23/30 Iter: 5/10 Time: 3.275 Data: 0.025 Loss: 0.1375/4.6633/1.0769/0.1458/1.0993/0.2282 Align:0.1346
+[2026-02-03 10:09:43,606] [Train] Epoch: 23/30 Iter: 10/10 Time: 3.218 Data: 0.025 Loss: 0.1383/5.1286/1.0795/0.1472/0.9162/0.2129 Align:0.0976
+[2026-02-03 10:09:43,796] [Eval]  Epoch: 23/30 F-score: 0.5814/0.6375
+
+
+[2026-02-03 10:10:02,756] [Train] Epoch: 24/30 Iter: 5/10 Time: 3.230 Data: 0.025 Loss: 0.1373/4.6906/1.1080/0.1429/0.8660/0.1997 Align:0.1085
+[2026-02-03 10:10:06,016] [Train] Epoch: 24/30 Iter: 10/10 Time: 3.177 Data: 0.025 Loss: 0.1386/5.1170/1.0766/0.1480/0.8496/0.2217 Align:0.1174
+[2026-02-03 10:10:06,204] [Eval]  Epoch: 24/30 F-score: 0.6092/0.6375
+
+
+[2026-02-03 10:10:18,423] [Train] Epoch: 25/30 Iter: 5/10 Time: 3.162 Data: 0.025 Loss: 0.1375/4.8537/1.0829/0.1432/0.8774/0.2066 Align:0.1062
+[2026-02-03 10:10:21,285] [Train] Epoch: 25/30 Iter: 10/10 Time: 3.110 Data: 0.025 Loss: 0.1377/5.1014/1.0667/0.1479/0.8881/0.1952 Align:0.0970
+[2026-02-03 10:10:21,475] [Eval]  Epoch: 25/30 F-score: 0.6224/0.6375
+
+
+[2026-02-03 10:10:43,727] [Train] Epoch: 26/30 Iter: 5/10 Time: 3.136 Data: 0.025 Loss: 0.1375/4.7547/1.0902/0.1479/1.0007/0.2039 Align:0.1240
+[2026-02-03 10:11:36,023] [Train] Epoch: 26/30 Iter: 10/10 Time: 3.277 Data: 0.025 Loss: 0.1391/5.1227/1.0635/0.1485/0.8160/0.1945 Align:0.0966
+[2026-02-03 10:11:36,209] [Eval]  Epoch: 26/30 F-score: 0.6249/0.6375
+
+
+[2026-02-03 10:11:47,776] [Train] Epoch: 27/30 Iter: 5/10 Time: 3.259 Data: 0.025 Loss: 0.1403/4.8424/1.0626/0.1502/0.9066/0.2081 Align:0.1008
+[2026-02-03 10:11:51,556] [Train] Epoch: 27/30 Iter: 10/10 Time: 3.212 Data: 0.025 Loss: 0.1395/5.1369/1.0473/0.1527/0.8155/0.2182 Align:0.1303
+[2026-02-03 10:11:51,736] [Eval]  Epoch: 27/30 F-score: 0.6160/0.6375
+
+
+[2026-02-03 10:12:02,666] [Train] Epoch: 28/30 Iter: 5/10 Time: 3.194 Data: 0.025 Loss: 0.1389/4.7493/1.0292/0.1602/0.8419/0.1883 Align:0.1499
+[2026-02-03 10:12:13,932] [Train] Epoch: 28/30 Iter: 10/10 Time: 3.177 Data: 0.025 Loss: 0.1396/5.1195/1.0405/0.1490/0.8210/0.1990 Align:0.1310
+[2026-02-03 10:12:14,131] [Eval]  Epoch: 28/30 F-score: 0.5949/0.6375
+
+
+[2026-02-03 10:12:18,092] [Train] Epoch: 29/30 Iter: 5/10 Time: 3.135 Data: 0.025 Loss: 0.1391/5.7218/1.0287/0.1421/0.8031/0.2058 Align:0.1096
+[2026-02-03 10:12:30,176] [Train] Epoch: 29/30 Iter: 10/10 Time: 3.123 Data: 0.025 Loss: 0.1399/5.1090/1.0400/0.1440/0.7488/0.2013 Align:0.1133
+[2026-02-03 10:12:30,375] [Eval]  Epoch: 29/30 F-score: 0.5968/0.6375
+
+
+[2026-02-03 10:12:52,772] [Train] Epoch: 30/30 Iter: 5/10 Time: 3.146 Data: 0.025 Loss: 0.1394/5.1398/1.0112/0.1497/0.7416/0.1948 Align:0.1053
+[2026-02-03 10:12:56,410] [Train] Epoch: 30/30 Iter: 10/10 Time: 3.105 Data: 0.025 Loss: 0.1396/5.1038/1.0168/0.1443/0.7369/0.1965 Align:0.1344
+[2026-02-03 10:12:56,599] [Eval]  Epoch: 30/30 F-score: 0.5995/0.6375
+
+
+[2026-02-03 10:12:56,604] Training done on data/TVSum/splits.yml.
+[2026-02-03 10:12:56,605] F1_results: {'split0': 0.6188322397097211, 'split1': 0.5870917475597688, 'split2': 0.6363030829191645, 'split3': 0.629672514395446, 'split4': 0.6374775936638925}
+[2026-02-03 10:12:56,605] F1-score: 0.6219
+
+

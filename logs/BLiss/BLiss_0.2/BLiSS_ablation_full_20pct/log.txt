@@ -1,0 +1,307 @@
+[2026-02-20 10:07:50,284] {'dataset': 'BLiSS', 'data_root': 'data', 'device': 'cuda', 'seed': 12345, 'max_epoch': 15, 'start_epoch': 0, 'batch_size': 64, 'num_workers': 0, 'model_dir': 'logs/BLiSS_ablation_full_20pct', 'log_file': 'log.txt', 'lr': 0.001, 'weight_decay': 1e-07, 'nms_thresh': 0.4, 'print_freq': 5, 'eval_freq': 5, 'suffix': 'ablation_full_20pct', 'data_ratio': 0.2, 'checkpoint': None, 'test': False, 'num_input_video': 512, 'num_input_text': 768, 'num_feature': 512, 'num_hidden': 128, 'dropout_video': 0.1, 'dropout_text': 0.1, 'dropout_attn': 0.1, 'dropout_fc': 0.5, 'num_layers': 6, 'lambda_contrastive_inter': 0.01, 'lambda_contrastive_intra': 0.001, 'ratio': 4, 'lambda_causal_contrast': 0.3, 'lambda_causal_effect': 0.2, 'lambda_alignment': 1.0, 'lambda_text_necessity': 1.0, 'cf_strategy': 'mixed', 'disable_alignment_mask': True, 'enable_causal_alignment': False, 'lambda_causal_alignment': 0.5, 'lambda_causal_diagonal': 1.0, 'lambda_causal_sparsity': 0.1, 'alignment_warmup_epochs': 5, 'alignment_compute_freq': 10, 'lambda_cf_contrast': 0.5, 'lambda_cf_effect': 0.3, 'lambda_cf_sensitivity': 0.2, 'enable_cf_explanation': False}
+[2026-02-20 10:07:52,608] Causal contrastive loss enabled for BLiSS: lambda_contrast=0.3
+[2026-02-20 10:07:52,608] Using default tokenizer.
+[2026-02-20 10:08:01,054] 
+Model_BLiSS(
+  (proj_fc_video): Sequential(
+    (0): Linear(in_features=512, out_features=128, bias=True)
+    (1): Dropout(p=0.1, inplace=False)
+  )
+  (proj_fc_text): Sequential(
+    (0): Linear(in_features=768, out_features=128, bias=True)
+    (1): Dropout(p=0.1, inplace=False)
+  )
+  (multiway_list): ModuleList(
+    (0): MultiWayTransformer(
+      (norm1_fused): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (attn_fusion): MultiHeadAttention(q_dims=128, k_dims=128, v_dims=128, h_dims=128, o_dims=128, heads=8, p=0.1, bias=True)
+      (norm2_video): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (ffn_video): FFN(
+        (fc1): Linear(in_features=128, out_features=512, bias=True)
+        (act): GELU(approximate=none)
+        (drop1): Dropout(p=0.1, inplace=False)
+        (fc2): Linear(in_features=512, out_features=128, bias=True)
+        (drop2): Dropout(p=0.1, inplace=False)
+      )
+      (norm2_text): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (ffn_text): FFN(
+        (fc1): Linear(in_features=128, out_features=512, bias=True)
+        (act): GELU(approximate=none)
+        (drop1): Dropout(p=0.1, inplace=False)
+        (fc2): Linear(in_features=512, out_features=128, bias=True)
+        (drop2): Dropout(p=0.1, inplace=False)
+      )
+    )
+    (1): MultiWayTransformer(
+      (norm1_fused): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (attn_fusion): MultiHeadAttention(q_dims=128, k_dims=128, v_dims=128, h_dims=128, o_dims=128, heads=8, p=0.1, bias=True)
+      (norm2_video): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (ffn_video): FFN(
+        (fc1): Linear(in_features=128, out_features=512, bias=True)
+        (act): GELU(approximate=none)
+        (drop1): Dropout(p=0.1, inplace=False)
+        (fc2): Linear(in_features=512, out_features=128, bias=True)
+        (drop2): Dropout(p=0.1, inplace=False)
+      )
+      (norm2_text): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (ffn_text): FFN(
+        (fc1): Linear(in_features=128, out_features=512, bias=True)
+        (act): GELU(approximate=none)
+        (drop1): Dropout(p=0.1, inplace=False)
+        (fc2): Linear(in_features=512, out_features=128, bias=True)
+        (drop2): Dropout(p=0.1, inplace=False)
+      )
+    )
+    (2): MultiWayTransformer(
+      (norm1_fused): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (attn_fusion): MultiHeadAttention(q_dims=128, k_dims=128, v_dims=128, h_dims=128, o_dims=128, heads=8, p=0.1, bias=True)
+      (norm2_video): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (ffn_video): FFN(
+        (fc1): Linear(in_features=128, out_features=512, bias=True)
+        (act): GELU(approximate=none)
+        (drop1): Dropout(p=0.1, inplace=False)
+        (fc2): Linear(in_features=512, out_features=128, bias=True)
+        (drop2): Dropout(p=0.1, inplace=False)
+      )
+      (norm2_text): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (ffn_text): FFN(
+        (fc1): Linear(in_features=128, out_features=512, bias=True)
+        (act): GELU(approximate=none)
+        (drop1): Dropout(p=0.1, inplace=False)
+        (fc2): Linear(in_features=512, out_features=128, bias=True)
+        (drop2): Dropout(p=0.1, inplace=False)
+      )
+    )
+    (3): MultiWayTransformer(
+      (norm1_fused): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (attn_fusion): MultiHeadAttention(q_dims=128, k_dims=128, v_dims=128, h_dims=128, o_dims=128, heads=8, p=0.1, bias=True)
+      (norm2_video): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (ffn_video): FFN(
+        (fc1): Linear(in_features=128, out_features=512, bias=True)
+        (act): GELU(approximate=none)
+        (drop1): Dropout(p=0.1, inplace=False)
+        (fc2): Linear(in_features=512, out_features=128, bias=True)
+        (drop2): Dropout(p=0.1, inplace=False)
+      )
+      (norm2_text): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (ffn_text): FFN(
+        (fc1): Linear(in_features=128, out_features=512, bias=True)
+        (act): GELU(approximate=none)
+        (drop1): Dropout(p=0.1, inplace=False)
+        (fc2): Linear(in_features=512, out_features=128, bias=True)
+        (drop2): Dropout(p=0.1, inplace=False)
+      )
+    )
+    (4): MultiWayTransformer(
+      (norm1_fused): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (attn_fusion): MultiHeadAttention(q_dims=128, k_dims=128, v_dims=128, h_dims=128, o_dims=128, heads=8, p=0.1, bias=True)
+      (norm2_video): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (ffn_video): FFN(
+        (fc1): Linear(in_features=128, out_features=512, bias=True)
+        (act): GELU(approximate=none)
+        (drop1): Dropout(p=0.1, inplace=False)
+        (fc2): Linear(in_features=512, out_features=128, bias=True)
+        (drop2): Dropout(p=0.1, inplace=False)
+      )
+      (norm2_text): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (ffn_text): FFN(
+        (fc1): Linear(in_features=128, out_features=512, bias=True)
+        (act): GELU(approximate=none)
+        (drop1): Dropout(p=0.1, inplace=False)
+        (fc2): Linear(in_features=512, out_features=128, bias=True)
+        (drop2): Dropout(p=0.1, inplace=False)
+      )
+    )
+    (5): MultiWayTransformer(
+      (norm1_fused): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (attn_fusion): MultiHeadAttention(q_dims=128, k_dims=128, v_dims=128, h_dims=128, o_dims=128, heads=8, p=0.1, bias=True)
+      (norm2_video): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (ffn_video): FFN(
+        (fc1): Linear(in_features=128, out_features=512, bias=True)
+        (act): GELU(approximate=none)
+        (drop1): Dropout(p=0.1, inplace=False)
+        (fc2): Linear(in_features=512, out_features=128, bias=True)
+        (drop2): Dropout(p=0.1, inplace=False)
+      )
+      (norm2_text): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+      (ffn_text): FFN(
+        (fc1): Linear(in_features=128, out_features=512, bias=True)
+        (act): GELU(approximate=none)
+        (drop1): Dropout(p=0.1, inplace=False)
+        (fc2): Linear(in_features=512, out_features=128, bias=True)
+        (drop2): Dropout(p=0.1, inplace=False)
+      )
+    )
+  )
+  (norm_video): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+  (norm_text): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+  (fc_video): Sequential(
+    (0): Linear(in_features=128, out_features=128, bias=True)
+    (1): ReLU(inplace=True)
+    (2): Dropout(p=0.5, inplace=False)
+    (3): Linear(in_features=128, out_features=1, bias=True)
+  )
+  (fc_text): Sequential(
+    (0): Linear(in_features=128, out_features=128, bias=True)
+    (1): ReLU(inplace=True)
+    (2): Dropout(p=0.5, inplace=False)
+    (3): Linear(in_features=128, out_features=1, bias=True)
+  )
+)
+[2026-02-20 10:08:09,903] [Train] Epoch: 1/15 Iter: 5/34 LR: 0.0010 Time: 1.770 Data: 0.059 Loss: 0.0628/0.0656/0.0417/0.0046/0.3145 Causal: 0.1398 R1: 0.2751 R2: 0.1329 RL: 0.2589 Cos: 0.6250
+[2026-02-20 10:08:18,096] [Train] Epoch: 1/15 Iter: 10/34 LR: 0.0010 Time: 1.704 Data: 0.048 Loss: 0.0513/0.0467/0.0417/0.0047/0.2892 Causal: 0.1448 R1: 0.2745 R2: 0.1310 RL: 0.2595 Cos: 0.6210
+[2026-02-20 10:08:26,348] [Train] Epoch: 1/15 Iter: 15/34 LR: 0.0010 Time: 1.686 Data: 0.044 Loss: 0.0481/0.0389/0.0417/0.0047/0.2798 Causal: 0.1464 R1: 0.2735 R2: 0.1262 RL: 0.2581 Cos: 0.6206
+[2026-02-20 10:08:34,994] [Train] Epoch: 1/15 Iter: 20/34 LR: 0.0010 Time: 1.697 Data: 0.042 Loss: 0.0466/0.0349/0.0417/0.0046/0.2750 Causal: 0.1472 R1: 0.2797 R2: 0.1324 RL: 0.2647 Cos: 0.6199
+[2026-02-20 10:08:43,093] [Train] Epoch: 1/15 Iter: 25/34 LR: 0.0010 Time: 1.682 Data: 0.042 Loss: 0.0453/0.0324/0.0417/0.0045/0.2717 Causal: 0.1478 R1: 0.2795 R2: 0.1333 RL: 0.2644 Cos: 0.6185
+[2026-02-20 10:08:51,212] [Train] Epoch: 1/15 Iter: 30/34 LR: 0.0010 Time: 1.672 Data: 0.044 Loss: 0.0442/0.0308/0.0417/0.0045/0.2693 Causal: 0.1481 R1: 0.2780 R2: 0.1326 RL: 0.2629 Cos: 0.6198
+[2026-02-20 10:08:57,218] [Train] Epoch: 1/15 R1: 0.2792/0.2792 R2: 0.1328/0.1328 RL: 0.2641/0.2641 Cos: 0.6195/0.6195
+
+[2026-02-20 10:09:05,779] [Train] Epoch: 2/15 Iter: 5/34 LR: 0.0010 Time: 1.660 Data: 0.046 Loss: 0.0388/0.0223/0.0417/0.0038/0.2563 Causal: 0.1498 R1: 0.2761 R2: 0.1327 RL: 0.2637 Cos: 0.6076
+[2026-02-20 10:09:13,918] [Train] Epoch: 2/15 Iter: 10/34 LR: 0.0010 Time: 1.656 Data: 0.046 Loss: 0.0395/0.0219/0.0417/0.0037/0.2567 Causal: 0.1498 R1: 0.2842 R2: 0.1362 RL: 0.2698 Cos: 0.6134
+[2026-02-20 10:09:22,203] [Train] Epoch: 2/15 Iter: 15/34 LR: 0.0010 Time: 1.656 Data: 0.047 Loss: 0.0390/0.0220/0.0417/0.0037/0.2562 Causal: 0.1498 R1: 0.2897 R2: 0.1399 RL: 0.2750 Cos: 0.6146
+[2026-02-20 10:09:30,701] [Train] Epoch: 2/15 Iter: 20/34 LR: 0.0010 Time: 1.660 Data: 0.048 Loss: 0.0388/0.0220/0.0417/0.0036/0.2560 Causal: 0.1498 R1: 0.3025 R2: 0.1512 RL: 0.2874 Cos: 0.6146
+[2026-02-20 10:09:39,169] [Train] Epoch: 2/15 Iter: 25/34 LR: 0.0010 Time: 1.663 Data: 0.049 Loss: 0.0383/0.0221/0.0417/0.0036/0.2555 Causal: 0.1498 R1: 0.3121 R2: 0.1616 RL: 0.2968 Cos: 0.6165
+[2026-02-20 10:09:48,075] [Train] Epoch: 2/15 Iter: 30/34 LR: 0.0010 Time: 1.672 Data: 0.049 Loss: 0.0380/0.0220/0.0417/0.0036/0.2552 Causal: 0.1499 R1: 0.3335 R2: 0.1862 RL: 0.3181 Cos: 0.6171
+[2026-02-20 10:09:54,573] [Train] Epoch: 2/15 R1: 0.3445/0.3445 R2: 0.1996/0.1996 RL: 0.3289/0.3289 Cos: 0.6186/0.6195
+
+[2026-02-20 10:10:03,476] [Train] Epoch: 3/15 Iter: 5/34 LR: 0.0010 Time: 1.677 Data: 0.049 Loss: 0.0330/0.0218/0.0417/0.0037/0.2500 Causal: 0.1499 R1: 0.4318 R2: 0.3014 RL: 0.4171 Cos: 0.6248
+[2026-02-20 10:10:12,241] [Train] Epoch: 3/15 Iter: 10/34 LR: 0.0010 Time: 1.682 Data: 0.049 Loss: 0.0323/0.0217/0.0417/0.0037/0.2493 Causal: 0.1499 R1: 0.4468 R2: 0.3194 RL: 0.4330 Cos: 0.6207
+[2026-02-20 10:10:21,189] [Train] Epoch: 3/15 Iter: 15/34 LR: 0.0010 Time: 1.688 Data: 0.049 Loss: 0.0332/0.0217/0.0417/0.0037/0.2502 Causal: 0.1500 R1: 0.4547 R2: 0.3273 RL: 0.4411 Cos: 0.6204
+[2026-02-20 10:10:30,245] [Train] Epoch: 3/15 Iter: 20/34 LR: 0.0010 Time: 1.695 Data: 0.049 Loss: 0.0331/0.0218/0.0417/0.0036/0.2501 Causal: 0.1500 R1: 0.4590 R2: 0.3354 RL: 0.4462 Cos: 0.6235
+[2026-02-20 10:10:39,331] [Train] Epoch: 3/15 Iter: 25/34 LR: 0.0010 Time: 1.702 Data: 0.050 Loss: 0.0326/0.0217/0.0417/0.0036/0.2495 Causal: 0.1499 R1: 0.4633 R2: 0.3423 RL: 0.4508 Cos: 0.6233
+[2026-02-20 10:10:49,218] [Train] Epoch: 3/15 Iter: 30/34 LR: 0.0010 Time: 1.716 Data: 0.050 Loss: 0.0324/0.0218/0.0417/0.0036/0.2494 Causal: 0.1500 R1: 0.4640 R2: 0.3448 RL: 0.4515 Cos: 0.6236
+[2026-02-20 10:10:55,637] [Train] Epoch: 3/15 R1: 0.4595/0.4595 R2: 0.3400/0.3400 RL: 0.4463/0.4463 Cos: 0.6221/0.6221
+
+[2026-02-20 10:11:04,792] [Train] Epoch: 4/15 Iter: 5/34 LR: 0.0010 Time: 1.717 Data: 0.051 Loss: 0.0312/0.0221/0.0417/0.0034/0.2481 Causal: 0.1498 R1: 0.4726 R2: 0.3579 RL: 0.4598 Cos: 0.6260
+[2026-02-20 10:11:13,665] [Train] Epoch: 4/15 Iter: 10/34 LR: 0.0010 Time: 1.720 Data: 0.051 Loss: 0.0300/0.0218/0.0416/0.0034/0.2468 Causal: 0.1499 R1: 0.4744 R2: 0.3560 RL: 0.4615 Cos: 0.6260
+[2026-02-20 10:11:22,654] [Train] Epoch: 4/15 Iter: 15/34 LR: 0.0010 Time: 1.723 Data: 0.051 Loss: 0.0306/0.0218/0.0416/0.0033/0.2473 Causal: 0.1499 R1: 0.4806 R2: 0.3667 RL: 0.4686 Cos: 0.6209
+[2026-02-20 10:11:31,484] [Train] Epoch: 4/15 Iter: 20/34 LR: 0.0010 Time: 1.725 Data: 0.052 Loss: 0.0302/0.0218/0.0416/0.0033/0.2470 Causal: 0.1500 R1: 0.4772 R2: 0.3622 RL: 0.4653 Cos: 0.6195
+[2026-02-20 10:11:40,200] [Train] Epoch: 4/15 Iter: 25/34 LR: 0.0010 Time: 1.725 Data: 0.052 Loss: 0.0304/0.0218/0.0416/0.0033/0.2471 Causal: 0.1500 R1: 0.4786 R2: 0.3652 RL: 0.4667 Cos: 0.6203
+[2026-02-20 10:11:49,740] [Train] Epoch: 4/15 Iter: 30/34 LR: 0.0010 Time: 1.732 Data: 0.052 Loss: 0.0304/0.0218/0.0416/0.0033/0.2472 Causal: 0.1500 R1: 0.4763 R2: 0.3630 RL: 0.4644 Cos: 0.6206
+[2026-02-20 10:11:56,388] [Train] Epoch: 4/15 R1: 0.4750/0.4750 R2: 0.3618/0.3618 RL: 0.4632/0.4632 Cos: 0.6214/0.6221
+
+[2026-02-20 10:12:05,345] [Train] Epoch: 5/15 Iter: 5/34 LR: 0.0010 Time: 1.732 Data: 0.052 Loss: 0.0297/0.0222/0.0416/0.0033/0.2468 Causal: 0.1500 R1: 0.4934 R2: 0.3931 RL: 0.4839 Cos: 0.6226
+[2026-02-20 10:12:14,366] [Train] Epoch: 5/15 Iter: 10/34 LR: 0.0010 Time: 1.735 Data: 0.052 Loss: 0.0307/0.0218/0.0416/0.0033/0.2475 Causal: 0.1500 R1: 0.4776 R2: 0.3720 RL: 0.4675 Cos: 0.6261
+[2026-02-20 10:12:23,180] [Train] Epoch: 5/15 Iter: 15/34 LR: 0.0010 Time: 1.736 Data: 0.052 Loss: 0.0309/0.0217/0.0416/0.0033/0.2475 Causal: 0.1500 R1: 0.4749 R2: 0.3630 RL: 0.4640 Cos: 0.6275
+[2026-02-20 10:12:32,691] [Train] Epoch: 5/15 Iter: 20/34 LR: 0.0010 Time: 1.741 Data: 0.052 Loss: 0.0307/0.0217/0.0416/0.0033/0.2473 Causal: 0.1500 R1: 0.4796 R2: 0.3672 RL: 0.4684 Cos: 0.6270
+[2026-02-20 10:12:41,872] [Train] Epoch: 5/15 Iter: 25/34 LR: 0.0010 Time: 1.744 Data: 0.052 Loss: 0.0308/0.0218/0.0415/0.0033/0.2474 Causal: 0.1500 R1: 0.4794 R2: 0.3652 RL: 0.4681 Cos: 0.6259
+[2026-02-20 10:12:50,601] [Train] Epoch: 5/15 Iter: 30/34 LR: 0.0010 Time: 1.744 Data: 0.051 Loss: 0.0306/0.0218/0.0415/0.0033/0.2472 Causal: 0.1500 R1: 0.4756 R2: 0.3626 RL: 0.4641 Cos: 0.6275
+[2026-02-20 10:12:56,767] [Train] Epoch: 5/15 R1: 0.4803/0.4803 R2: 0.3682/0.3682 RL: 0.4689/0.4689 Cos: 0.6267/0.6267
+
+[2026-02-20 10:13:01,303] [Eval]  Epoch: 5/15 Iter: 5/40 R1: 0.5048 R2: 0.3964 RL: 0.4931 Cos: 0.5912
+[2026-02-20 10:13:05,628] [Eval]  Epoch: 5/15 Iter: 10/40 R1: 0.4961 R2: 0.3893 RL: 0.4845 Cos: 0.6128
+[2026-02-20 10:13:09,989] [Eval]  Epoch: 5/15 Iter: 15/40 R1: 0.4919 R2: 0.3820 RL: 0.4795 Cos: 0.6118
+[2026-02-20 10:13:14,288] [Eval]  Epoch: 5/15 Iter: 20/40 R1: 0.4924 R2: 0.3847 RL: 0.4802 Cos: 0.6219
+[2026-02-20 10:13:19,223] [Eval]  Epoch: 5/15 Iter: 25/40 R1: 0.4975 R2: 0.3888 RL: 0.4853 Cos: 0.6195
+[2026-02-20 10:13:23,717] [Eval]  Epoch: 5/15 Iter: 30/40 R1: 0.5014 R2: 0.3898 RL: 0.4894 Cos: 0.6235
+[2026-02-20 10:13:27,863] [Eval]  Epoch: 5/15 Iter: 35/40 R1: 0.4993 R2: 0.3875 RL: 0.4875 Cos: 0.6190
+[2026-02-20 10:13:31,930] [Eval]  Epoch: 5/15 Iter: 40/40 R1: 0.5001 R2: 0.3889 RL: 0.4887 Cos: 0.6197
+[2026-02-20 10:13:31,975] [Eval]  Epoch: 5/15 R1: 0.5001/0.5001 R2: 0.3889/0.3889 RL: 0.4887/0.4887 Cos: 0.6197/0.6197
+
+
+[2026-02-20 10:13:40,909] [Train] Epoch: 6/15 Iter: 5/34 LR: 0.0010 Time: 1.741 Data: 0.051 Loss: 0.0318/0.0215/0.0399/0.0033/0.2463 Causal: 0.1497 R1: 0.4782 R2: 0.3709 RL: 0.4681 Cos: 0.6191
+[2026-02-20 10:13:49,920] [Train] Epoch: 6/15 Iter: 10/34 LR: 0.0010 Time: 1.742 Data: 0.051 Loss: 0.0311/0.0218/0.0392/0.0033/0.2448 Causal: 0.1494 R1: 0.4778 R2: 0.3656 RL: 0.4668 Cos: 0.6278
+[2026-02-20 10:13:58,851] [Train] Epoch: 6/15 Iter: 15/34 LR: 0.0010 Time: 1.744 Data: 0.051 Loss: 0.0307/0.0218/0.0385/0.0033/0.2437 Causal: 0.1494 R1: 0.4804 R2: 0.3698 RL: 0.4688 Cos: 0.6284
+[2026-02-20 10:14:07,447] [Train] Epoch: 6/15 Iter: 20/34 LR: 0.0010 Time: 1.743 Data: 0.050 Loss: 0.0303/0.0218/0.0381/0.0033/0.2429 Causal: 0.1494 R1: 0.4823 R2: 0.3724 RL: 0.4710 Cos: 0.6282
+[2026-02-20 10:14:16,045] [Train] Epoch: 6/15 Iter: 25/34 LR: 0.0010 Time: 1.742 Data: 0.050 Loss: 0.0300/0.0217/0.0377/0.0033/0.2421 Causal: 0.1493 R1: 0.4826 R2: 0.3724 RL: 0.4711 Cos: 0.6293
+[2026-02-20 10:14:25,108] [Train] Epoch: 6/15 Iter: 30/34 LR: 0.0010 Time: 1.744 Data: 0.050 Loss: 0.0299/0.0217/0.0374/0.0033/0.2418 Causal: 0.1493 R1: 0.4848 R2: 0.3752 RL: 0.4732 Cos: 0.6294
+[2026-02-20 10:14:31,987] [Train] Epoch: 6/15 R1: 0.4874/0.4874 R2: 0.3770/0.3770 RL: 0.4761/0.4761 Cos: 0.6280/0.6280
+
+[2026-02-20 10:14:41,042] [Train] Epoch: 7/15 Iter: 5/34 LR: 0.0010 Time: 1.745 Data: 0.050 Loss: 0.0302/0.0212/0.0352/0.0033/0.2394 Causal: 0.1495 R1: 0.5361 R2: 0.4292 RL: 0.5268 Cos: 0.6238
+[2026-02-20 10:14:50,295] [Train] Epoch: 7/15 Iter: 10/34 LR: 0.0010 Time: 1.748 Data: 0.050 Loss: 0.0303/0.0215/0.0352/0.0033/0.2398 Causal: 0.1495 R1: 0.5090 R2: 0.4003 RL: 0.4992 Cos: 0.6346
+[2026-02-20 10:14:59,677] [Train] Epoch: 7/15 Iter: 15/34 LR: 0.0010 Time: 1.751 Data: 0.050 Loss: 0.0303/0.0214/0.0350/0.0033/0.2395 Causal: 0.1495 R1: 0.4999 R2: 0.3896 RL: 0.4895 Cos: 0.6314
+[2026-02-20 10:15:08,513] [Train] Epoch: 7/15 Iter: 20/34 LR: 0.0010 Time: 1.751 Data: 0.050 Loss: 0.0298/0.0214/0.0349/0.0033/0.2390 Causal: 0.1496 R1: 0.4961 R2: 0.3864 RL: 0.4855 Cos: 0.6324
+[2026-02-20 10:15:17,363] [Train] Epoch: 7/15 Iter: 25/34 LR: 0.0010 Time: 1.751 Data: 0.050 Loss: 0.0297/0.0215/0.0348/0.0033/0.2388 Causal: 0.1495 R1: 0.4991 R2: 0.3883 RL: 0.4880 Cos: 0.6331
+[2026-02-20 10:15:26,333] [Train] Epoch: 7/15 Iter: 30/34 LR: 0.0010 Time: 1.752 Data: 0.050 Loss: 0.0299/0.0215/0.0346/0.0033/0.2388 Causal: 0.1495 R1: 0.4981 R2: 0.3869 RL: 0.4871 Cos: 0.6333
+[2026-02-20 10:15:32,590] [Train] Epoch: 7/15 R1: 0.4962/0.4962 R2: 0.3862/0.3862 RL: 0.4852/0.4852 Cos: 0.6337/0.6337
+
+[2026-02-20 10:15:41,586] [Train] Epoch: 8/15 Iter: 5/34 LR: 0.0010 Time: 1.750 Data: 0.050 Loss: 0.0296/0.0218/0.0324/0.0034/0.2365 Causal: 0.1493 R1: 0.4934 R2: 0.3789 RL: 0.4837 Cos: 0.6397
+[2026-02-20 10:15:50,285] [Train] Epoch: 8/15 Iter: 10/34 LR: 0.0010 Time: 1.750 Data: 0.050 Loss: 0.0290/0.0216/0.0318/0.0034/0.2351 Causal: 0.1493 R1: 0.4901 R2: 0.3787 RL: 0.4794 Cos: 0.6362
+[2026-02-20 10:15:59,422] [Train] Epoch: 8/15 Iter: 15/34 LR: 0.0010 Time: 1.752 Data: 0.050 Loss: 0.0289/0.0216/0.0312/0.0034/0.2345 Causal: 0.1493 R1: 0.4869 R2: 0.3754 RL: 0.4759 Cos: 0.6331
+[2026-02-20 10:16:08,764] [Train] Epoch: 8/15 Iter: 20/34 LR: 0.0010 Time: 1.754 Data: 0.050 Loss: 0.0291/0.0217/0.0308/0.0034/0.2344 Causal: 0.1493 R1: 0.4840 R2: 0.3737 RL: 0.4734 Cos: 0.6349
+[2026-02-20 10:16:17,706] [Train] Epoch: 8/15 Iter: 25/34 LR: 0.0010 Time: 1.754 Data: 0.050 Loss: 0.0294/0.0216/0.0306/0.0034/0.2343 Causal: 0.1493 R1: 0.4870 R2: 0.3751 RL: 0.4764 Cos: 0.6361
+[2026-02-20 10:16:26,958] [Train] Epoch: 8/15 Iter: 30/34 LR: 0.0010 Time: 1.756 Data: 0.050 Loss: 0.0296/0.0215/0.0304/0.0034/0.2342 Causal: 0.1493 R1: 0.4928 R2: 0.3822 RL: 0.4824 Cos: 0.6344
+[2026-02-20 10:16:33,204] [Train] Epoch: 8/15 R1: 0.4954/0.4962 R2: 0.3852/0.3862 RL: 0.4849/0.4852 Cos: 0.6365/0.6365
+
+[2026-02-20 10:16:42,085] [Train] Epoch: 9/15 Iter: 5/34 LR: 0.0010 Time: 1.754 Data: 0.050 Loss: 0.0302/0.0217/0.0288/0.0034/0.2337 Causal: 0.1495 R1: 0.5087 R2: 0.4054 RL: 0.4980 Cos: 0.6370
+[2026-02-20 10:16:51,033] [Train] Epoch: 9/15 Iter: 10/34 LR: 0.0010 Time: 1.754 Data: 0.050 Loss: 0.0297/0.0217/0.0286/0.0034/0.2329 Causal: 0.1495 R1: 0.5122 R2: 0.4080 RL: 0.5016 Cos: 0.6402
+[2026-02-20 10:17:00,288] [Train] Epoch: 9/15 Iter: 15/34 LR: 0.0010 Time: 1.756 Data: 0.050 Loss: 0.0303/0.0215/0.0286/0.0034/0.2333 Causal: 0.1495 R1: 0.5067 R2: 0.4010 RL: 0.4963 Cos: 0.6372
+[2026-02-20 10:17:09,502] [Train] Epoch: 9/15 Iter: 20/34 LR: 0.0010 Time: 1.758 Data: 0.050 Loss: 0.0300/0.0214/0.0282/0.0034/0.2325 Causal: 0.1495 R1: 0.5015 R2: 0.3959 RL: 0.4913 Cos: 0.6419
+[2026-02-20 10:17:18,527] [Train] Epoch: 9/15 Iter: 25/34 LR: 0.0010 Time: 1.758 Data: 0.050 Loss: 0.0297/0.0214/0.0281/0.0034/0.2321 Causal: 0.1495 R1: 0.4967 R2: 0.3909 RL: 0.4863 Cos: 0.6407
+[2026-02-20 10:17:27,506] [Train] Epoch: 9/15 Iter: 30/34 LR: 0.0010 Time: 1.759 Data: 0.050 Loss: 0.0296/0.0214/0.0281/0.0034/0.2320 Causal: 0.1495 R1: 0.4979 R2: 0.3902 RL: 0.4871 Cos: 0.6392
+[2026-02-20 10:17:34,008] [Train] Epoch: 9/15 R1: 0.4970/0.4970 R2: 0.3885/0.3885 RL: 0.4864/0.4864 Cos: 0.6405/0.6405
+
+[2026-02-20 10:17:42,818] [Train] Epoch: 10/15 Iter: 5/34 LR: 0.0010 Time: 1.757 Data: 0.050 Loss: 0.0295/0.0213/0.0276/0.0034/0.2317 Causal: 0.1497 R1: 0.5099 R2: 0.4027 RL: 0.5000 Cos: 0.6402
+[2026-02-20 10:17:51,483] [Train] Epoch: 10/15 Iter: 10/34 LR: 0.0010 Time: 1.757 Data: 0.050 Loss: 0.0291/0.0213/0.0275/0.0034/0.2308 Causal: 0.1495 R1: 0.5063 R2: 0.4016 RL: 0.4962 Cos: 0.6495
+[2026-02-20 10:18:00,608] [Train] Epoch: 10/15 Iter: 15/34 LR: 0.0010 Time: 1.758 Data: 0.050 Loss: 0.0294/0.0213/0.0275/0.0034/0.2311 Causal: 0.1495 R1: 0.5087 R2: 0.4019 RL: 0.4982 Cos: 0.6510
+[2026-02-20 10:18:09,483] [Train] Epoch: 10/15 Iter: 20/34 LR: 0.0010 Time: 1.758 Data: 0.050 Loss: 0.0295/0.0213/0.0275/0.0034/0.2312 Causal: 0.1495 R1: 0.5080 R2: 0.3987 RL: 0.4975 Cos: 0.6472
+[2026-02-20 10:18:18,557] [Train] Epoch: 10/15 Iter: 25/34 LR: 0.0010 Time: 1.759 Data: 0.050 Loss: 0.0295/0.0213/0.0276/0.0034/0.2313 Causal: 0.1495 R1: 0.5040 R2: 0.3950 RL: 0.4935 Cos: 0.6477
+[2026-02-20 10:18:27,595] [Train] Epoch: 10/15 Iter: 30/34 LR: 0.0010 Time: 1.760 Data: 0.050 Loss: 0.0294/0.0213/0.0274/0.0034/0.2311 Causal: 0.1495 R1: 0.5004 R2: 0.3916 RL: 0.4900 Cos: 0.6451
+[2026-02-20 10:18:34,331] [Train] Epoch: 10/15 R1: 0.4987/0.4987 R2: 0.3903/0.3903 RL: 0.4881/0.4881 Cos: 0.6435/0.6435
+
+[2026-02-20 10:18:38,774] [Eval]  Epoch: 10/15 Iter: 5/40 R1: 0.5168 R2: 0.4098 RL: 0.5052 Cos: 0.5886
+[2026-02-20 10:18:42,969] [Eval]  Epoch: 10/15 Iter: 10/40 R1: 0.5078 R2: 0.4034 RL: 0.4962 Cos: 0.6107
+[2026-02-20 10:18:47,354] [Eval]  Epoch: 10/15 Iter: 15/40 R1: 0.5021 R2: 0.3952 RL: 0.4900 Cos: 0.6132
+[2026-02-20 10:18:51,560] [Eval]  Epoch: 10/15 Iter: 20/40 R1: 0.5009 R2: 0.3954 RL: 0.4888 Cos: 0.6262
+[2026-02-20 10:18:56,309] [Eval]  Epoch: 10/15 Iter: 25/40 R1: 0.5077 R2: 0.4011 RL: 0.4957 Cos: 0.6243
+[2026-02-20 10:19:00,389] [Eval]  Epoch: 10/15 Iter: 30/40 R1: 0.5113 R2: 0.4012 RL: 0.4995 Cos: 0.6280
+[2026-02-20 10:19:04,349] [Eval]  Epoch: 10/15 Iter: 35/40 R1: 0.5112 R2: 0.4014 RL: 0.4998 Cos: 0.6257
+[2026-02-20 10:19:08,292] [Eval]  Epoch: 10/15 Iter: 40/40 R1: 0.5134 R2: 0.4043 RL: 0.5024 Cos: 0.6261
+[2026-02-20 10:19:08,331] [Eval]  Epoch: 10/15 R1: 0.5134/0.5134 R2: 0.4043/0.4043 RL: 0.5024/0.5024 Cos: 0.6261/0.6261
+
+
+[2026-02-20 10:19:17,107] [Train] Epoch: 11/15 Iter: 5/34 LR: 0.0010 Time: 1.759 Data: 0.050 Loss: 0.0294/0.0210/0.0277/0.0034/0.2308 Causal: 0.1494 R1: 0.5146 R2: 0.4037 RL: 0.5056 Cos: 0.6351
+[2026-02-20 10:19:25,845] [Train] Epoch: 11/15 Iter: 10/34 LR: 0.0010 Time: 1.759 Data: 0.050 Loss: 0.0287/0.0212/0.0277/0.0034/0.2304 Causal: 0.1494 R1: 0.5072 R2: 0.4038 RL: 0.4977 Cos: 0.6371
+[2026-02-20 10:19:34,772] [Train] Epoch: 11/15 Iter: 15/34 LR: 0.0010 Time: 1.759 Data: 0.050 Loss: 0.0289/0.0213/0.0273/0.0034/0.2302 Causal: 0.1493 R1: 0.5043 R2: 0.3991 RL: 0.4942 Cos: 0.6453
+[2026-02-20 10:19:43,831] [Train] Epoch: 11/15 Iter: 20/34 LR: 0.0010 Time: 1.760 Data: 0.050 Loss: 0.0292/0.0213/0.0272/0.0034/0.2305 Causal: 0.1494 R1: 0.5043 R2: 0.3981 RL: 0.4940 Cos: 0.6439
+[2026-02-20 10:19:53,390] [Train] Epoch: 11/15 Iter: 25/34 LR: 0.0010 Time: 1.762 Data: 0.050 Loss: 0.0292/0.0212/0.0270/0.0034/0.2302 Causal: 0.1494 R1: 0.5072 R2: 0.4014 RL: 0.4970 Cos: 0.6445
+[2026-02-20 10:20:02,625] [Train] Epoch: 11/15 Iter: 30/34 LR: 0.0010 Time: 1.763 Data: 0.050 Loss: 0.0292/0.0212/0.0269/0.0034/0.2302 Causal: 0.1494 R1: 0.4987 R2: 0.3914 RL: 0.4881 Cos: 0.6447
+[2026-02-20 10:20:09,260] [Train] Epoch: 11/15 R1: 0.4965/0.4987 R2: 0.3882/0.3903 RL: 0.4858/0.4881 Cos: 0.6440/0.6440
+
+[2026-02-20 10:20:17,909] [Train] Epoch: 12/15 Iter: 5/34 LR: 0.0010 Time: 1.762 Data: 0.050 Loss: 0.0291/0.0215/0.0267/0.0034/0.2303 Causal: 0.1496 R1: 0.5085 R2: 0.4001 RL: 0.4972 Cos: 0.6399
+[2026-02-20 10:20:27,390] [Train] Epoch: 12/15 Iter: 10/34 LR: 0.0010 Time: 1.763 Data: 0.050 Loss: 0.0301/0.0212/0.0265/0.0034/0.2308 Causal: 0.1495 R1: 0.5103 R2: 0.4033 RL: 0.4993 Cos: 0.6428
+[2026-02-20 10:20:36,368] [Train] Epoch: 12/15 Iter: 15/34 LR: 0.0010 Time: 1.764 Data: 0.050 Loss: 0.0299/0.0209/0.0263/0.0034/0.2301 Causal: 0.1495 R1: 0.5055 R2: 0.4002 RL: 0.4955 Cos: 0.6430
+[2026-02-20 10:20:45,378] [Train] Epoch: 12/15 Iter: 20/34 LR: 0.0010 Time: 1.764 Data: 0.051 Loss: 0.0295/0.0210/0.0264/0.0034/0.2298 Causal: 0.1496 R1: 0.5055 R2: 0.3988 RL: 0.4956 Cos: 0.6423
+[2026-02-20 10:20:54,364] [Train] Epoch: 12/15 Iter: 25/34 LR: 0.0010 Time: 1.765 Data: 0.051 Loss: 0.0297/0.0209/0.0264/0.0034/0.2299 Causal: 0.1495 R1: 0.5017 R2: 0.3955 RL: 0.4917 Cos: 0.6468
+[2026-02-20 10:21:03,368] [Train] Epoch: 12/15 Iter: 30/34 LR: 0.0010 Time: 1.765 Data: 0.051 Loss: 0.0295/0.0209/0.0264/0.0034/0.2296 Causal: 0.1495 R1: 0.5028 R2: 0.3966 RL: 0.4926 Cos: 0.6461
+[2026-02-20 10:21:09,832] [Train] Epoch: 12/15 R1: 0.5036/0.5036 R2: 0.3966/0.3966 RL: 0.4930/0.4930 Cos: 0.6450/0.6450
+
+[2026-02-20 10:21:18,979] [Train] Epoch: 13/15 Iter: 5/34 LR: 0.0010 Time: 1.764 Data: 0.051 Loss: 0.0297/0.0213/0.0262/0.0034/0.2300 Causal: 0.1494 R1: 0.4890 R2: 0.3783 RL: 0.4789 Cos: 0.6378
+[2026-02-20 10:21:27,745] [Train] Epoch: 13/15 Iter: 10/34 LR: 0.0010 Time: 1.764 Data: 0.050 Loss: 0.0291/0.0211/0.0263/0.0034/0.2293 Causal: 0.1494 R1: 0.4970 R2: 0.3888 RL: 0.4867 Cos: 0.6459
+[2026-02-20 10:21:36,721] [Train] Epoch: 13/15 Iter: 15/34 LR: 0.0010 Time: 1.765 Data: 0.051 Loss: 0.0289/0.0210/0.0264/0.0034/0.2291 Causal: 0.1494 R1: 0.4923 R2: 0.3859 RL: 0.4819 Cos: 0.6492
+[2026-02-20 10:21:45,858] [Train] Epoch: 13/15 Iter: 20/34 LR: 0.0010 Time: 1.765 Data: 0.051 Loss: 0.0289/0.0210/0.0264/0.0034/0.2290 Causal: 0.1494 R1: 0.4946 R2: 0.3880 RL: 0.4839 Cos: 0.6486
+[2026-02-20 10:21:55,063] [Train] Epoch: 13/15 Iter: 25/34 LR: 0.0010 Time: 1.766 Data: 0.051 Loss: 0.0290/0.0209/0.0263/0.0034/0.2290 Causal: 0.1493 R1: 0.4945 R2: 0.3876 RL: 0.4841 Cos: 0.6479
+[2026-02-20 10:22:04,241] [Train] Epoch: 13/15 Iter: 30/34 LR: 0.0010 Time: 1.767 Data: 0.051 Loss: 0.0291/0.0209/0.0262/0.0034/0.2290 Causal: 0.1494 R1: 0.4953 R2: 0.3873 RL: 0.4849 Cos: 0.6481
+[2026-02-20 10:22:10,807] [Train] Epoch: 13/15 R1: 0.4974/0.5036 R2: 0.3910/0.3966 RL: 0.4873/0.4930 Cos: 0.6494/0.6494
+
+[2026-02-20 10:22:19,816] [Train] Epoch: 14/15 Iter: 5/34 LR: 0.0010 Time: 1.766 Data: 0.051 Loss: 0.0283/0.0206/0.0261/0.0034/0.2276 Causal: 0.1493 R1: 0.4840 R2: 0.3764 RL: 0.4745 Cos: 0.6443
+[2026-02-20 10:22:29,006] [Train] Epoch: 14/15 Iter: 10/34 LR: 0.0010 Time: 1.767 Data: 0.051 Loss: 0.0286/0.0207/0.0257/0.0034/0.2278 Causal: 0.1494 R1: 0.4973 R2: 0.3907 RL: 0.4867 Cos: 0.6515
+[2026-02-20 10:22:38,058] [Train] Epoch: 14/15 Iter: 15/34 LR: 0.0010 Time: 1.768 Data: 0.051 Loss: 0.0287/0.0208/0.0255/0.0034/0.2277 Causal: 0.1493 R1: 0.4990 R2: 0.3935 RL: 0.4885 Cos: 0.6486
+[2026-02-20 10:22:46,701] [Train] Epoch: 14/15 Iter: 20/34 LR: 0.0010 Time: 1.767 Data: 0.051 Loss: 0.0291/0.0207/0.0252/0.0034/0.2277 Causal: 0.1493 R1: 0.4985 R2: 0.3933 RL: 0.4881 Cos: 0.6481
+[2026-02-20 10:22:56,046] [Train] Epoch: 14/15 Iter: 25/34 LR: 0.0010 Time: 1.768 Data: 0.051 Loss: 0.0290/0.0206/0.0249/0.0034/0.2273 Causal: 0.1493 R1: 0.5008 R2: 0.3944 RL: 0.4903 Cos: 0.6478
+[2026-02-20 10:23:05,263] [Train] Epoch: 14/15 Iter: 30/34 LR: 0.0010 Time: 1.769 Data: 0.051 Loss: 0.0290/0.0207/0.0246/0.0034/0.2271 Causal: 0.1493 R1: 0.4996 R2: 0.3925 RL: 0.4893 Cos: 0.6467
+[2026-02-20 10:23:11,918] [Train] Epoch: 14/15 R1: 0.4987/0.5036 R2: 0.3920/0.3966 RL: 0.4883/0.4930 Cos: 0.6456/0.6494
+
+[2026-02-20 10:23:20,986] [Train] Epoch: 15/15 Iter: 5/34 LR: 0.0010 Time: 1.769 Data: 0.051 Loss: 0.0285/0.0208/0.0213/0.0035/0.2230 Causal: 0.1490 R1: 0.4906 R2: 0.3848 RL: 0.4803 Cos: 0.6419
+[2026-02-20 10:23:29,956] [Train] Epoch: 15/15 Iter: 10/34 LR: 0.0010 Time: 1.769 Data: 0.050 Loss: 0.0286/0.0209/0.0208/0.0034/0.2224 Causal: 0.1487 R1: 0.4978 R2: 0.3939 RL: 0.4875 Cos: 0.6452
+[2026-02-20 10:23:39,281] [Train] Epoch: 15/15 Iter: 15/34 LR: 0.0010 Time: 1.770 Data: 0.050 Loss: 0.0284/0.0209/0.0207/0.0035/0.2222 Causal: 0.1487 R1: 0.4968 R2: 0.3910 RL: 0.4865 Cos: 0.6461
+[2026-02-20 10:23:48,252] [Train] Epoch: 15/15 Iter: 20/34 LR: 0.0010 Time: 1.770 Data: 0.050 Loss: 0.0285/0.0210/0.0205/0.0035/0.2221 Causal: 0.1487 R1: 0.5005 R2: 0.3923 RL: 0.4897 Cos: 0.6451
+[2026-02-20 10:23:57,148] [Train] Epoch: 15/15 Iter: 25/34 LR: 0.0010 Time: 1.770 Data: 0.050 Loss: 0.0291/0.0209/0.0203/0.0035/0.2224 Causal: 0.1488 R1: 0.5020 R2: 0.3953 RL: 0.4915 Cos: 0.6463
+[2026-02-20 10:24:06,089] [Train] Epoch: 15/15 Iter: 30/34 LR: 0.0010 Time: 1.770 Data: 0.050 Loss: 0.0295/0.0210/0.0200/0.0035/0.2227 Causal: 0.1487 R1: 0.5033 R2: 0.3970 RL: 0.4930 Cos: 0.6470
+[2026-02-20 10:24:12,743] [Train] Epoch: 15/15 R1: 0.5013/0.5036 R2: 0.3943/0.3966 RL: 0.4909/0.4930 Cos: 0.6472/0.6494
+
+[2026-02-20 10:24:17,228] [Eval]  Epoch: 15/15 Iter: 5/40 R1: 0.5255 R2: 0.4215 RL: 0.5143 Cos: 0.5844
+[2026-02-20 10:24:21,567] [Eval]  Epoch: 15/15 Iter: 10/40 R1: 0.5186 R2: 0.4152 RL: 0.5075 Cos: 0.6029
+[2026-02-20 10:24:26,100] [Eval]  Epoch: 15/15 Iter: 15/40 R1: 0.5104 R2: 0.4038 RL: 0.4986 Cos: 0.6034
+[2026-02-20 10:24:30,381] [Eval]  Epoch: 15/15 Iter: 20/40 R1: 0.5075 R2: 0.4019 RL: 0.4956 Cos: 0.6211
+[2026-02-20 10:24:35,331] [Eval]  Epoch: 15/15 Iter: 25/40 R1: 0.5129 R2: 0.4059 RL: 0.5009 Cos: 0.6206
+[2026-02-20 10:24:39,605] [Eval]  Epoch: 15/15 Iter: 30/40 R1: 0.5153 R2: 0.4050 RL: 0.5036 Cos: 0.6253
+[2026-02-20 10:24:43,767] [Eval]  Epoch: 15/15 Iter: 35/40 R1: 0.5149 R2: 0.4042 RL: 0.5035 Cos: 0.6262
+[2026-02-20 10:24:47,938] [Eval]  Epoch: 15/15 Iter: 40/40 R1: 0.5166 R2: 0.4066 RL: 0.5056 Cos: 0.6245
+[2026-02-20 10:24:47,957] [Eval]  Epoch: 15/15 R1: 0.5166/0.5166 R2: 0.4066/0.4066 RL: 0.5056/0.5056 Cos: 0.6245/0.6261
+
+
+[2026-02-20 10:24:48,149] Training done. Val R1: 0.5166, R2: 0.4066, RL: 0.5056, Cos: 0.6261, Best Epoch:15.
+[2026-02-20 10:24:48,151]              Train R1: 0.5036, R2: 0.3966, RL: 0.4930, Cos: 0.6494.
+
+

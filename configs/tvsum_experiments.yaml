@@ -1,0 +1,59 @@
+# TVSum 实验配置 (精简版)
+# 
+# 仅保留两个核心创新点:
+# 1. 因果对比损失 (lambda_causal_contrast)
+# 2. 干预相异度对齐 (enable_causal_alignment)
+
+experiments:
+  # ------------------------------------------------------------
+  # 1. 基线 (No Causal)
+  # ------------------------------------------------------------
+  baseline:
+    description: "基线模型，无因果学习"
+    command: >
+      python train.py --dataset TVSum --max_epoch 25 --batch_size 8
+      --suffix baseline_cleanup
+      --lambda_causal_contrast 0.0
+      --enable_causal_alignment false
+    params:
+      lambda_causal_contrast: 0.0
+      enable_causal_alignment: false
+
+  # ------------------------------------------------------------
+  # 2. 仅因果对比 (创新1)
+  # ------------------------------------------------------------
+  causal_contrastive:
+    description: "仅启用因果对比损失 (创新1)"
+    command: >
+      python train.py --dataset TVSum --max_epoch 25 --batch_size 8
+      --suffix causal_cont_only
+      --lambda_causal_contrast 0.3
+      --enable_causal_alignment false
+    params:
+      lambda_causal_contrast: 0.3
+      enable_causal_alignment: false
+
+  # ------------------------------------------------------------
+  # 3. 完整因果模型 (创新1 + 创新2)
+  # ------------------------------------------------------------
+  full_causal:
+    description: "完整版：因果对比 (0.3) + 对齐发现 (0.5)"
+    command: >
+      python train.py --dataset TVSum --max_epoch 25 --batch_size 8
+      --suffix full_causal_cleanup
+      --lambda_causal_contrast 0.3
+      --enable_causal_alignment true
+      --lambda_causal_alignment 0.5
+    params:
+      lambda_causal_contrast: 0.3
+      enable_causal_alignment: true
+      lambda_causal_alignment: 0.5
+      lambda_causal_diagonal: 1.0
+      lambda_causal_sparsity: 0.1
+
+# ------------------------------------------------------------
+# 参数说明
+# ------------------------------------------------------------
+# lambda_causal_contrast: 因果对比损失权重 (用于区分相关性与因果性)
+# enable_causal_alignment: 是否启用无监督对齐发现 (Intervention Dissimilarity)
+# lambda_causal_alignment: 对齐发现损失权重
